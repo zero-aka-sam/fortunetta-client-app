@@ -2,6 +2,7 @@ import Web3 from "web3";
 import { Client } from "./artifacts/contracts.js";
 import { finishRound } from "./Roundutils.js";
 import { ethers } from "ethers";
+import client from "./artifacts/client.js";
 
 export const operator = (socket) => {
   const web3Ws = new Web3(
@@ -39,5 +40,22 @@ export const operator = (socket) => {
         socket.emit("RoundID", Round[0]);
       }
     } catch (err) {}
+  });
+
+  const Contract = new web3Ws.eth.Contract(client.abi, client.address);
+
+  const events = Contract.events.allEvents();
+
+  events.subscribe((err, res) => {
+    if (res) {
+      if (res.event === "betPlaced") {
+        console.log("UserID:", res.returnValues[0]);
+        console.log("Choice:", res.returnValues[1]);
+        console.log("Amount:", res.returnValues[2]);
+      }
+      if (res.event === "roundCreated") {
+        console.log("New Round:", res.returnValues[0]);
+      }
+    }
   });
 };
