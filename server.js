@@ -43,12 +43,8 @@ server.listen(PORT, () => {
 });
 
 io.on("connection", (socket) => {
-  // socket.on("user_joined", (name) => {
-  //   allUsers[socket.id] = name;
-  //   Content = { name, message: "joined the chat", type: "received" };
-  //   socket.broadcast.emit("receive", Content);
-  // });
   operator(socket);
+
   //EMITTING ALL THE CHATS FROM DATABASE
 
   Chat.find().then((result) => {
@@ -61,9 +57,9 @@ io.on("connection", (socket) => {
     try {
       let chat = new Chat({
         message: Content.message,
-        sender: Content.userId,
-        avatar: Content.avatar,
-        userName: Content.userName,
+        userId: Content.userId,
+        // avatar: Content.avatar,
+        // userName: Content.userName,
       });
 
       chat.save((err, doc) => {

@@ -52,6 +52,13 @@ export const operator = (socket) => {
         console.log("UserID:", res.returnValues[0]);
         console.log("Choice:", res.returnValues[1]);
         console.log("Amount:", res.returnValues[2]);
+        let placeBetDetails = {
+          userId: res.returnValues[0],
+          choice: res.returnValues[1],
+          amount: res.returnValues[2],
+        };
+
+        socket.emit("betPlaced", placeBetDetails);
       }
       if (res.event === "roundCreated") {
         console.log("New Round:", res.returnValues[0]);
