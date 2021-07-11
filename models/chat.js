@@ -6,9 +6,8 @@ const chatSchema = mongoose.Schema(
     message: {
       type: String,
     },
-    sender: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
+    userId: {
+      type: String,
     },
     avatar: {
       type: String,
