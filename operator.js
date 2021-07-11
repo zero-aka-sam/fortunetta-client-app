@@ -15,32 +15,54 @@ export const operator = (socket) => {
     "wss://bsc.getblock.io/testnet/?api_key=0399cb06-5a32-4e68-97a7-c0b9bb21e53c"
   );
 
-  const block = Promise.resolve(eth.getBlockNumber()).then(async (res) => {
-    const Round = await Client.methods.currentRound().call();
-    const countdown = Round[2] - res;
-    if (countdown < 0) {
-      console.log("calling finishRound");
-      await finishRound();
-    } else {
-    }
-  });
+  
 
-  eth.on("block", async (block, err) => {
-    try {
-      const Round = await Client.methods.currentRound().call();
-
-      const countdown = Round[2] - block;
-
-      if (countdown === 0) {
-        await finishRound();
-      } else {
-        console.log(countdown);
-        socket.emit("countdown", countdown);
-        console.log("RoundID:", Round[0]);
-        socket.emit("RoundID", Round[0]);
+  try{
+    eth.on("block", (block, err) => {
+      if(!err){
+        try{
+          const Round = Promise.resolve(Client.methods.currentRound().call()).then(async(res)=>{
+            const countdown = res[2] - block
+            if(countdown === 0){
+              await 
+                finishRound();
+            }
+            else{
+              console.log(countdown);
+              socket.emit("countdown", countdown);
+              socket.emit("RoundID", res[0]);
+            }});
+        }catch(err){
+            console.log("try Error:");
+        }
+      }if(err){
+        console.log("Block err::");
       }
-    } catch (err) {}
-  });
+      // try {
+      //   if(block){
+      //   const Round = await Client.methods.currentRound().call();}
+      //   catch (err) {
+      //     console.log("round not created");
+      //   }
+      //   const countdown = Round[2] - block;
+  
+      //   if (countdown === 0) {
+      //     await finishRound();
+      //   } else {
+      //     console.log(countdown);
+      //     socket.emit("countdown", countdown);
+      //     console.log("RoundID:", Round[0]);
+      //     socket.emit("RoundID", Round[0]);
+      //   }
+      // }else{
+        
+      // }
+  
+      
+    });
+  }catch{console.log('Block event err:')}
+
+  
 
   const Contract = new web3Ws.eth.Contract(client.abi, client.address);
 
