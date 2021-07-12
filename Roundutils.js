@@ -98,3 +98,18 @@ const signAndSendTransaction = async (txnData, privateKey, provider) => {
       return provider.eth.sendSignedTransaction(res.rawTransaction);
     });
 };
+
+export async function distributeDailyRewards(){
+  Promise.resolve(contract.methods.distributeDailyReward().encodeABI()).then(async(data)=>{
+    const gas = await web3Ws.eth.estimateGas({from: myAddress,to:controller.address,data: data});
+    return { gas:gas,data: data}
+  }).then((res)=>{
+    const tx = {
+      from: myAddress,
+      to: controller.address,
+      data: res.data,
+      gas: res.gas
+    }
+    return tx
+  }).then(async(tx)=>await sendSignedTransaction(tx,privateKey,web3Ws)).then(console.log("dailyRewardsDistributed"))
+}

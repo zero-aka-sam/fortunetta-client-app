@@ -1,6 +1,6 @@
 import Web3 from "web3";
-import { Client } from "./artifacts/contracts.js";
-import { finishRound } from "./Roundutils.js";
+import { Client,Controller } from "./artifacts/contracts.js";
+import { createRound, finishRound,distributeDailyRewards } from "./Roundutils.js";
 import { ethers } from "ethers";
 import client from "./artifacts/client.js";
 
@@ -15,13 +15,26 @@ export const operator = (socket) => {
     "wss://bsc.getblock.io/testnet/?api_key=0399cb06-5a32-4e68-97a7-c0b9bb21e53c"
   );
 
+  const currentStatus = Promise.resolve(eth.getBlockNumber()).then(async (res)=>{
+  try{
+    await Client.methods.currentRound().call().then(async(round)=>{
+      if(round[2]< res){
+        await finishRound()
+      }    });
+    
+  }
+  catch(err){
+    await createRound();
+  }
+  })
+
   
 
   try{
     eth.on("block", (block, err) => {
       if(!err){
         try{
-          const Round = Promise.resolve(Client.methods.currentRound().call()).then(async(res)=>{
+          Promise.resolve(Client.methods.currentRound().call()).then(async(res)=>{
             const countdown = res[2] - block
             if(countdown === 0){
               await 
@@ -31,9 +44,17 @@ export const operator = (socket) => {
               console.log(countdown);
               socket.emit("countdown", countdown);
               socket.emit("RoundID", res[0]);
-            }});
+            }}).then(async()=>{const rewardBLock = await Controller.methods.nextdailyRewardAt().call()
+            return rewardBLock}).then(async(dailyRewardBlock)=>{
+              if(dailyRewardBlock === block){
+                await distributeDailyRewards()
+              }
+              else{
+                console.log("nextRewardAt:",dailyRewardBlock)
+              }
+            });
         }catch(err){
-            console.log("try Error:");
+            console.log("try Error:",err);
         }
       }if(err){
         console.log("Block err::");
