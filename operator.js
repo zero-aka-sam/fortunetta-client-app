@@ -7,6 +7,7 @@ import {
 } from "./Roundutils.js";
 import { ethers } from "ethers";
 import client from "./artifacts/client.js";
+import controller from "./artifacts/controller.js";
 
 export const operator = (socket) => {
   const web3Ws = new Web3(
@@ -118,4 +119,19 @@ export const operator = (socket) => {
       }
     }
   });
+
+  const Contract2 = new web3Ws.eth.Contract(controller.abi,controller.address);
+
+  const events2 = Contract2.events.allEvents();
+
+  events2.subscribe((err,res)=>{
+    if(res){
+      if(res.event === 'finishedRound'){
+        console.log("Choice",res.returnValues[0]);
+      }
+    }
+    if(!res){
+      console.log('COntroller events err:');
+    }
+  })
 };
