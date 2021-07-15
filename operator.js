@@ -43,13 +43,13 @@ export const operator = (socket) => {
         try {
           Promise.resolve(Client.methods.currentRound().call())
             .then(async (res) => {
+              socket.emit("currenBlock", block);
               const countdown = res[2] - block;
               if (countdown === 0) {
                 await finishRound();
               } else {
-                // console.log(countdown);
+                console.log(countdown);
                 socket.emit("countdown", countdown);
-                socket.emit("RoundID", res[0]);
               }
             })
             .then(async () => {
@@ -63,7 +63,6 @@ export const operator = (socket) => {
                 await distributeDailyRewards();
               } else {
                 // console.log("nextRewardAt:",dailyRewardBlock)
-                console.log(block, dailyRewardBlock);
                 socket.emit("nextReward", dailyRewardBlock);
               }
             });
@@ -120,18 +119,16 @@ export const operator = (socket) => {
     }
   });
 
-  const Contract2 = new web3Ws.eth.Contract(controller.abi,controller.address);
+  const Contract2 = new web3Ws.eth.Contract(controller.abi, controller.address);
 
   const events2 = Contract2.events.allEvents();
 
-  events2.subscribe((err,res)=>{
-    if(res){
-      if(res.event === 'finishedRound'){
-        console.log("Choice",res.returnValues[0]);
+  events2.subscribe((err, res) => {
+    if (res) {
+      if (res.event === "finishedRound") {
+        console.log("Choice", res.returnValues[0]);
+        socket.emit("winningChoice", res.returnValues[0]);
       }
     }
-    if(!res){
-      console.log('COntroller events err:');
-    }
-  })
+  });
 };
