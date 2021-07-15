@@ -119,16 +119,18 @@ export const operator = (socket) => {
     }
   });
 
+  events.unsubscribe();
+
   const Contract2 = new web3Ws.eth.Contract(controller.abi, controller.address);
 
   const events2 = Contract2.events.allEvents();
 
   events2.subscribe((err, res) => {
-    if (res) {
-      if (res.event === "finishedRound") {
-        console.log("Choice", res.returnValues[0]);
-        socket.emit("winningChoice", res.returnValues[0]);
-      }
+    if (res.event === "finishedRound") {
+      console.log("Choice", res.returnValues[0]);
+      socket.emit("winningChoice", res.returnValues[0]);
     }
   });
+
+  events2.unsubscribe();
 };
