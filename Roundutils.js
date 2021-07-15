@@ -13,6 +13,7 @@ const web3Ws = new Web3(provider);
 const contract = new web3Ws.eth.Contract(controller.abi, controller.address);
 
 export async function createRound() {
+  try{
   const { data, gas } = Promise.resolve(
     contract.methods.createRound().encodeABI()
   )
@@ -48,11 +49,15 @@ export async function createRound() {
       return tx;
     })
     .then(async (tx) => await signAndSendTransaction(tx, privateKey, web3Ws))
-    .then((tx) => console.log("roundCreated"));
+    .then((tx) => console.log("roundCreated"));}
+    catch(err){
+      console.log('Create Round err')
+    }
   //const txn = ;
 }
 
 export async function finishRound() {
+  try{
   function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -89,6 +94,9 @@ export async function finishRound() {
     .then(() => {
       createRound();
     });
+  }catch(err){
+    console.log('finishRound err:');
+  }
 }
 
 const signAndSendTransaction = async (txnData, privateKey, provider) => {

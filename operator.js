@@ -110,18 +110,20 @@ export const operator = (socket) => {
     }
   });
 
+  events.unsubscribe();
+
   const Contract2 = new web3Ws.eth.Contract(controller.abi,controller.address);
 
   const events2 = Contract2.events.allEvents();
 
   events2.subscribe((err,res)=>{
-    if(res){
-      if(res.event === 'finishedRound'){
+    if(res.event === 'finishedRound'){
         console.log("Choice",res.returnValues[0]);
       }
-    }
     if(!res){
-      console.log('COntroller events err:');
+      console.log('Controller events err:');
     }
   })
+
+  events2.unsubscribe();
 };
