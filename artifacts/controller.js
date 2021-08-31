@@ -1,497 +1,497 @@
 const controller = {
-  address: "0xa17682F6BB16991F2F5B3F2c100cda3455184f56",
+  address: "0x46979ceE14a2155FeF9Ff87843Aa93891748F497",
   abi: [
     {
-      "inputs": [
+      inputs: [
         {
-          "internalType": "address",
-          "name": "_operator",
-          "type": "address"
+          internalType: "address",
+          name: "_operator",
+          type: "address",
         },
         {
-          "internalType": "contract IClient",
-          "name": "_client",
-          "type": "address"
+          internalType: "contract IClient",
+          name: "_client",
+          type: "address",
         },
         {
-          "internalType": "contract IBSCV",
-          "name": "_bscv",
-          "type": "address"
-        }
+          internalType: "contract IBSCV",
+          name: "_bscv",
+          type: "address",
+        },
       ],
-      "stateMutability": "nonpayable",
-      "type": "constructor"
+      stateMutability: "nonpayable",
+      type: "constructor",
     },
     {
-      "anonymous": false,
-      "inputs": [
+      anonymous: false,
+      inputs: [
         {
-          "indexed": true,
-          "internalType": "address",
-          "name": "previousGuard",
-          "type": "address"
+          indexed: true,
+          internalType: "address",
+          name: "previousGuard",
+          type: "address",
         },
         {
-          "indexed": true,
-          "internalType": "address",
-          "name": "newGuard",
-          "type": "address"
-        }
+          indexed: true,
+          internalType: "address",
+          name: "newGuard",
+          type: "address",
+        },
       ],
-      "name": "GuardshipTransferred",
-      "type": "event"
+      name: "GuardshipTransferred",
+      type: "event",
     },
     {
-      "anonymous": false,
-      "inputs": [
+      anonymous: false,
+      inputs: [
         {
-          "indexed": true,
-          "internalType": "uint32",
-          "name": "day",
-          "type": "uint32"
+          indexed: true,
+          internalType: "uint32",
+          name: "day",
+          type: "uint32",
         },
         {
-          "indexed": true,
-          "internalType": "uint256",
-          "name": "amount",
-          "type": "uint256"
-        }
+          indexed: true,
+          internalType: "uint256",
+          name: "amount",
+          type: "uint256",
+        },
       ],
-      "name": "dailyRewardDistributed",
-      "type": "event"
+      name: "dailyRewardDistributed",
+      type: "event",
     },
     {
-      "anonymous": false,
-      "inputs": [
+      anonymous: false,
+      inputs: [
         {
-          "indexed": true,
-          "internalType": "uint256",
-          "name": "_choice",
-          "type": "uint256"
-        }
+          indexed: true,
+          internalType: "uint256",
+          name: "_choice",
+          type: "uint256",
+        },
       ],
-      "name": "finishedRound",
-      "type": "event"
+      name: "finishedRound",
+      type: "event",
     },
     {
-      "inputs": [],
-      "name": "BSCV",
-      "outputs": [
+      inputs: [],
+      name: "BSCV",
+      outputs: [
         {
-          "internalType": "contract IBSCV",
-          "name": "",
-          "type": "address"
-        }
+          internalType: "contract IBSCV",
+          name: "",
+          type: "address",
+        },
       ],
-      "stateMutability": "view",
-      "type": "function"
+      stateMutability: "view",
+      type: "function",
     },
     {
-      "inputs": [],
-      "name": "Client",
-      "outputs": [
+      inputs: [],
+      name: "Client",
+      outputs: [
         {
-          "internalType": "contract IClient",
-          "name": "",
-          "type": "address"
-        }
+          internalType: "contract IClient",
+          name: "",
+          type: "address",
+        },
       ],
-      "stateMutability": "view",
-      "type": "function"
+      stateMutability: "view",
+      type: "function",
     },
     {
-      "inputs": [],
-      "name": "Round",
-      "outputs": [
+      inputs: [],
+      name: "Round",
+      outputs: [
         {
-          "internalType": "uint256",
-          "name": "_value",
-          "type": "uint256"
-        }
+          internalType: "uint256",
+          name: "_value",
+          type: "uint256",
+        },
       ],
-      "stateMutability": "view",
-      "type": "function"
+      stateMutability: "view",
+      type: "function",
     },
     {
-      "inputs": [
+      inputs: [
         {
-          "internalType": "uint256",
-          "name": "_level",
-          "type": "uint256"
+          internalType: "uint256",
+          name: "_level",
+          type: "uint256",
         },
         {
-          "internalType": "uint256",
-          "name": "_condition",
-          "type": "uint256"
+          internalType: "uint256",
+          name: "_condition",
+          type: "uint256",
         },
         {
-          "internalType": "uint256",
-          "name": "_multiplier",
-          "type": "uint256"
-        }
+          internalType: "uint256",
+          name: "_multiplier",
+          type: "uint256",
+        },
       ],
-      "name": "addLevel",
-      "outputs": [
+      name: "addLevel",
+      outputs: [
         {
-          "internalType": "string",
-          "name": "message",
-          "type": "string"
-        }
+          internalType: "string",
+          name: "message",
+          type: "string",
+        },
       ],
-      "stateMutability": "nonpayable",
-      "type": "function"
+      stateMutability: "nonpayable",
+      type: "function",
     },
     {
-      "inputs": [
+      inputs: [
         {
-          "internalType": "address",
-          "name": "_user",
-          "type": "address"
+          internalType: "address",
+          name: "_user",
+          type: "address",
         },
         {
-          "internalType": "bool",
-          "name": "_approved",
-          "type": "bool"
-        }
+          internalType: "bool",
+          name: "_approved",
+          type: "bool",
+        },
       ],
-      "name": "changeUserStatus",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
+      name: "changeUserStatus",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
     },
     {
-      "inputs": [],
-      "name": "createRound",
-      "outputs": [
+      inputs: [],
+      name: "createRound",
+      outputs: [
         {
-          "internalType": "uint256",
-          "name": "roundId",
-          "type": "uint256"
-        }
+          internalType: "uint256",
+          name: "roundId",
+          type: "uint256",
+        },
       ],
-      "stateMutability": "nonpayable",
-      "type": "function"
+      stateMutability: "nonpayable",
+      type: "function",
     },
     {
-      "inputs": [
+      inputs: [
         {
-          "internalType": "uint32",
-          "name": "",
-          "type": "uint32"
+          internalType: "uint32",
+          name: "",
+          type: "uint32",
         },
         {
-          "internalType": "uint32",
-          "name": "",
-          "type": "uint32"
-        }
+          internalType: "uint32",
+          name: "",
+          type: "uint32",
+        },
       ],
-      "name": "dailyRewardInfo",
-      "outputs": [
+      name: "dailyRewardInfo",
+      outputs: [
         {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
+          internalType: "uint256",
+          name: "",
+          type: "uint256",
+        },
       ],
-      "stateMutability": "view",
-      "type": "function"
+      stateMutability: "view",
+      type: "function",
     },
     {
-      "inputs": [],
-      "name": "dailyRewardInterval",
-      "outputs": [
+      inputs: [],
+      name: "dailyRewardInterval",
+      outputs: [
         {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
+          internalType: "uint256",
+          name: "",
+          type: "uint256",
+        },
       ],
-      "stateMutability": "view",
-      "type": "function"
+      stateMutability: "view",
+      type: "function",
     },
     {
-      "inputs": [],
-      "name": "dailyRewards",
-      "outputs": [
+      inputs: [],
+      name: "dailyRewards",
+      outputs: [
         {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
+          internalType: "uint256",
+          name: "",
+          type: "uint256",
+        },
       ],
-      "stateMutability": "view",
-      "type": "function"
+      stateMutability: "view",
+      type: "function",
     },
     {
-      "inputs": [],
-      "name": "day",
-      "outputs": [
+      inputs: [],
+      name: "day",
+      outputs: [
         {
-          "internalType": "uint32",
-          "name": "",
-          "type": "uint32"
-        }
+          internalType: "uint32",
+          name: "",
+          type: "uint32",
+        },
       ],
-      "stateMutability": "view",
-      "type": "function"
+      stateMutability: "view",
+      type: "function",
     },
     {
-      "inputs": [],
-      "name": "distributeDailyReward",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
+      inputs: [],
+      name: "distributeDailyReward",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
     },
     {
-      "inputs": [
+      inputs: [
         {
-          "internalType": "uint256",
-          "name": "_level",
-          "type": "uint256"
+          internalType: "uint256",
+          name: "_level",
+          type: "uint256",
         },
         {
-          "internalType": "uint256",
-          "name": "_condition",
-          "type": "uint256"
-        }
+          internalType: "uint256",
+          name: "_condition",
+          type: "uint256",
+        },
       ],
-      "name": "editLevel",
-      "outputs": [
+      name: "editLevel",
+      outputs: [
         {
-          "internalType": "string",
-          "name": "message",
-          "type": "string"
-        }
+          internalType: "string",
+          name: "message",
+          type: "string",
+        },
       ],
-      "stateMutability": "nonpayable",
-      "type": "function"
+      stateMutability: "nonpayable",
+      type: "function",
     },
     {
-      "inputs": [
+      inputs: [
         {
-          "internalType": "uint256",
-          "name": "_choice",
-          "type": "uint256"
-        }
+          internalType: "uint256",
+          name: "_choice",
+          type: "uint256",
+        },
       ],
-      "name": "finishRound",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
+      name: "finishRound",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
     },
     {
-      "inputs": [],
-      "name": "getCurrentRoundId",
-      "outputs": [
+      inputs: [],
+      name: "getCurrentRoundId",
+      outputs: [
         {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
+          internalType: "uint256",
+          name: "",
+          type: "uint256",
+        },
       ],
-      "stateMutability": "view",
-      "type": "function"
+      stateMutability: "view",
+      type: "function",
     },
     {
-      "inputs": [],
-      "name": "guard",
-      "outputs": [
+      inputs: [],
+      name: "guard",
+      outputs: [
         {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
+          internalType: "address",
+          name: "",
+          type: "address",
+        },
       ],
-      "stateMutability": "view",
-      "type": "function"
+      stateMutability: "view",
+      type: "function",
     },
     {
-      "inputs": [
+      inputs: [
         {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
+          internalType: "uint256",
+          name: "",
+          type: "uint256",
+        },
       ],
-      "name": "levelConditions",
-      "outputs": [
+      name: "levelConditions",
+      outputs: [
         {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
+          internalType: "uint256",
+          name: "",
+          type: "uint256",
+        },
       ],
-      "stateMutability": "view",
-      "type": "function"
+      stateMutability: "view",
+      type: "function",
     },
     {
-      "inputs": [
+      inputs: [
         {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
+          internalType: "uint256",
+          name: "",
+          type: "uint256",
+        },
       ],
-      "name": "levelMultiplier",
-      "outputs": [
+      name: "levelMultiplier",
+      outputs: [
         {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
+          internalType: "uint256",
+          name: "",
+          type: "uint256",
+        },
       ],
-      "stateMutability": "view",
-      "type": "function"
+      stateMutability: "view",
+      type: "function",
     },
     {
-      "inputs": [
+      inputs: [
         {
-          "internalType": "uint256",
-          "name": "_level",
-          "type": "uint256"
+          internalType: "uint256",
+          name: "_level",
+          type: "uint256",
         },
         {
-          "internalType": "uint256",
-          "name": "_betCounts",
-          "type": "uint256"
-        }
+          internalType: "uint256",
+          name: "_betCounts",
+          type: "uint256",
+        },
       ],
-      "name": "levelRequirements",
-      "outputs": [
+      name: "levelRequirements",
+      outputs: [
         {
-          "internalType": "bool",
-          "name": "_result",
-          "type": "bool"
-        }
+          internalType: "bool",
+          name: "_result",
+          type: "bool",
+        },
       ],
-      "stateMutability": "view",
-      "type": "function"
+      stateMutability: "view",
+      type: "function",
     },
     {
-      "inputs": [],
-      "name": "nextdailyRewardAt",
-      "outputs": [
+      inputs: [],
+      name: "nextdailyRewardAt",
+      outputs: [
         {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
+          internalType: "uint256",
+          name: "",
+          type: "uint256",
+        },
       ],
-      "stateMutability": "view",
-      "type": "function"
+      stateMutability: "view",
+      type: "function",
     },
     {
-      "inputs": [],
-      "name": "operator",
-      "outputs": [
+      inputs: [],
+      name: "operator",
+      outputs: [
         {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
+          internalType: "address",
+          name: "",
+          type: "address",
+        },
       ],
-      "stateMutability": "view",
-      "type": "function"
+      stateMutability: "view",
+      type: "function",
     },
     {
-      "inputs": [],
-      "name": "renounceGuardship",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
+      inputs: [],
+      name: "renounceGuardship",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
     },
     {
-      "inputs": [
+      inputs: [
         {
-          "internalType": "contract IBSCV",
-          "name": "_token",
-          "type": "address"
-        }
+          internalType: "contract IBSCV",
+          name: "_token",
+          type: "address",
+        },
       ],
-      "name": "setBSCV",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
+      name: "setBSCV",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
     },
     {
-      "inputs": [
+      inputs: [
         {
-          "internalType": "contract IClient",
-          "name": "_client",
-          "type": "address"
-        }
+          internalType: "contract IClient",
+          name: "_client",
+          type: "address",
+        },
       ],
-      "name": "setClient",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
+      name: "setClient",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
     },
     {
-      "inputs": [
+      inputs: [
         {
-          "internalType": "uint32",
-          "name": "_countDown",
-          "type": "uint32"
-        }
+          internalType: "uint32",
+          name: "_countDown",
+          type: "uint32",
+        },
       ],
-      "name": "setCountDown",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
+      name: "setCountDown",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
     },
     {
-      "inputs": [
+      inputs: [
         {
-          "internalType": "address",
-          "name": "_operator",
-          "type": "address"
-        }
+          internalType: "address",
+          name: "_operator",
+          type: "address",
+        },
       ],
-      "name": "setOperator",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
+      name: "setOperator",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
     },
     {
-      "inputs": [],
-      "name": "totalRewardsDistributed",
-      "outputs": [
+      inputs: [],
+      name: "totalRewardsDistributed",
+      outputs: [
         {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
+          internalType: "uint256",
+          name: "",
+          type: "uint256",
+        },
       ],
-      "stateMutability": "view",
-      "type": "function"
+      stateMutability: "view",
+      type: "function",
     },
     {
-      "inputs": [
+      inputs: [
         {
-          "internalType": "address",
-          "name": "newGuard",
-          "type": "address"
-        }
+          internalType: "address",
+          name: "newGuard",
+          type: "address",
+        },
       ],
-      "name": "transferGuardship",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
+      name: "transferGuardship",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
     },
     {
-      "inputs": [
+      inputs: [
         {
-          "internalType": "address",
-          "name": "_withdraw",
-          "type": "address"
-        }
+          internalType: "address",
+          name: "_withdraw",
+          type: "address",
+        },
       ],
-      "name": "withdrawRevenue",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    }
-  ]
+      name: "withdrawRevenue",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+  ],
 };
 
 export default controller;

@@ -5,7 +5,7 @@ import controller from "./controller.js";
 
 const web3 = new Web3(
   new Web3.providers.HttpProvider(
-    "https://data-seed-prebsc-2-s3.binance.org:8545/"
+    "https://ropsten.infura.io/v3/c0367bfc1b5f47f5bba0427b5212038e"
   )
 );
 

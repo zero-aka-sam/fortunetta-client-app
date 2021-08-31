@@ -1,5 +1,5 @@
 const client = {
-  address: "0xAdB8F1ACfFAB252F48983EdD0a31651E55283E6F",
+  address: "0x6E4ad295b8c73c3015EaFeac64140CC0E86Fafec",
   abi: [
     {
       inputs: [

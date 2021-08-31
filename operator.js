@@ -17,7 +17,7 @@ export const operator = (socket) => {
   );
 
   const eth = new ethers.providers.WebSocketProvider(
-    "wss://bsc.getblock.io/testnet/?api_key=0399cb06-5a32-4e68-97a7-c0b9bb21e53c"
+    "wss://ropsten.infura.io/ws/v3/c0367bfc1b5f47f5bba0427b5212038e"
   );
 
   const currentStatus = Promise.resolve(eth.getBlockNumber()).then(
