@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Web3 from "web3";
-import Image from "next/Image";
+import Image from "next/image";
 import { useSelector, useDispatch } from "react-redux";
 
 import styles from "../styles/Modal.module.css";
