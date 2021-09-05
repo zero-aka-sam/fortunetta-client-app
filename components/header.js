@@ -49,7 +49,7 @@ const Header = () => {
       <li>
         <ActiveLink activeClassName="active" href="/roulette">
           <a className="nav-link">
-            <Image src="/roulette.svg" width={20} height={20} />
+            <Image alt="" src="/roulette.svg" width={20} height={20} />
             <span>Roulette</span>
           </a>
         </ActiveLink>
@@ -57,7 +57,7 @@ const Header = () => {
       <li>
         <ActiveLink activeClassName="active" href="/match_betting">
           <a className="nav-link">
-            <Image src="/matchBetting.svg" width={20} height={20} />
+            <Image alt="" src="/matchBetting.svg" width={20} height={20} />
             <span>Match Betting</span>
           </a>
         </ActiveLink>
@@ -65,7 +65,7 @@ const Header = () => {
       <li>
         <ActiveLink activeClassName="active" href="/coin_flip">
           <a className="nav-link">
-            <Image src="/coinFlip.svg" width={20} height={20} />
+            <Image alt="" src="/coinFlip.svg" width={20} height={20} />
             <span>Coin Flip</span>
           </a>
         </ActiveLink>
@@ -91,7 +91,7 @@ const Header = () => {
       </Button>
       {/* <ActiveLink activeClassName="active" href="/dailyRewards">
         <a className="secondary_gradient">
-          <Image src="/rewards.svg" width={20} height={20} />
+          <Image alt="" src="/rewards.svg" width={20} height={20} />
           <span>Daily Rewards</span>
         </a>
       </ActiveLink> */}
@@ -101,7 +101,7 @@ const Header = () => {
           user?.address ? () => setIsModal(true) : () => setConnectModal(true)
         }
       >
-        <Image src="/metamask.svg" width={20} height={20} />
+        <Image alt="" src="/metamask.svg" width={20} height={20} />
         <Text variant="primary" fontSize="14px">
           {user?.address
             ? `${user?.address?.slice(0, 3)}...${user?.address?.slice(
@@ -116,7 +116,7 @@ const Header = () => {
   const renderMenu = (
     <>
       <span className={styles.hamburger} onClick={() => setSidebar(true)}>
-        <Image src="/menu.svg" width={24} height={24} />
+        <Image alt="" src="/menu.svg" width={24} height={24} />
       </span>
     </>
   );
@@ -125,7 +125,7 @@ const Header = () => {
     <div className={styles.header}>
       <div className={styles.flexRow}>
         <div>
-          <Image src="/logolabel.png" width={291} height={54} />
+          <Image alt="" src="/logolabel.png" width={291} height={54} />
         </div>
         {renderNavigationMenu}
       </div>

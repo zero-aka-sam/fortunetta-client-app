@@ -777,13 +777,13 @@ const Roulette = ({ status }) => {
         </div>
         <div className={styles.roundBet} style={{ marginBottom: 10 }}>
           <div>
-            <Image src="/user.svg" width={20} height={20} />
+            <Image alt="" src="/user.svg" width={20} height={20} />
             <Text component="span" variant="primary" fontSize="12px">
               {_.uniqWith(betOnTwo, _.isEqual)?.length} bets
             </Text>
           </div>
           <div>
-            <Image src="/dollar.svg" width={20} height={20} />
+            <Image alt="" src="/dollar.svg" width={20} height={20} />
             <Text component="span" variant="primary" fontSize="12px">
               {betTwoValue ? (
                 <CountUp
@@ -833,7 +833,7 @@ const Roulette = ({ status }) => {
             </Text>
           </div>
           <div>
-            <Image src="/dollar.svg" width={20} height={20} />
+            <Image alt="" src="/dollar.svg" width={20} height={20} />
             <Text component="span" variant="primary" fontSize="12px">
               {betThreeValue ? (
                 <CountUp
@@ -872,7 +872,7 @@ const Roulette = ({ status }) => {
 
   const renderInstallMetamask = (
     <div className={styles.installMetamask}>
-      <Image src="/error.svg" width={50} height={50} />
+      <Image alt="" src="/error.svg" width={50} height={50} />
       <Text variant="primary" style={{ color: "#f65151", marginLeft: "0.5em" }}>
         Install metamask to experience FORTUNETTA
       </Text>

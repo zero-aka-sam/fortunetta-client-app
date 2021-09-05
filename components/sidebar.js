@@ -35,7 +35,7 @@ const Sidebar = ({ setSidebar }) => {
             : () => setConnectModal(true)
         }
       >
-        <Image src="/metamask.svg" width={20} height={20} />
+        <Image alt="" src="/metamask.svg" width={20} height={20} />
         <Text variant="primary" fontSize="14px">
           {user?.address
             ? `${user?.address?.slice(0, 3)}...${user?.address?.slice(
@@ -46,6 +46,7 @@ const Sidebar = ({ setSidebar }) => {
       </Button>
       <span style={{ cursor: "pointer" }}>
         <Image
+          alt=""
           src="/close.svg"
           width={24}
           height={24}
@@ -59,19 +60,19 @@ const Sidebar = ({ setSidebar }) => {
     <div className={styles.sidebarLinks}>
       <ActiveLink activeClassName="active" href="/roulette">
         <a className="side-nav-link">
-          <Image src="/roulette.svg" width={20} height={20} />
+          <Image alt="" src="/roulette.svg" width={20} height={20} />
           <span>Roulette</span>
         </a>
       </ActiveLink>
       <ActiveLink activeClassName="active" href="/match_betting">
         <a className="side-nav-link">
-          <Image src="/matchBetting.svg" width={20} height={20} />
+          <Image alt="" src="/matchBetting.svg" width={20} height={20} />
           <span>Match Betting</span>
         </a>
       </ActiveLink>
       <ActiveLink activeClassName="active" href="/coin_flip">
         <a className="side-nav-link">
-          <Image src="/coinFlip.svg" width={20} height={20} />
+          <Image alt="" src="/coinFlip.svg" width={20} height={20} />
           <span>Coin Flip</span>
         </a>
       </ActiveLink>
@@ -124,9 +125,9 @@ const Sidebar = ({ setSidebar }) => {
         <Text>Approved</Text>
         <Text>
           {user?.Approve ? (
-            <Image src="/tick.svg" width={20} height={20} />
+            <Image alt="" src="/tick.svg" width={20} height={20} />
           ) : (
-            <Image src="/close.svg" width={20} height={20} />
+            <Image alt="" src="/close.svg" width={20} height={20} />
           )}
         </Text>
       </div>

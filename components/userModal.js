@@ -15,6 +15,7 @@ const UserModal = ({ setIsModal }) => {
       <div></div>
       <span style={{ cursor: "pointer" }}>
         <Image
+          alt=""
           src="/closeOutline.svg"
           width={24}
           height={24}
@@ -60,9 +61,9 @@ const UserModal = ({ setIsModal }) => {
         <Text>Approved</Text>
         <Text>
           {user?.Approve ? (
-            <Image src="/tick.svg" width={20} height={20} />
+            <Image alt="" src="/tick.svg" width={20} height={20} />
           ) : (
-            <Image src="/close.svg" width={20} height={20} />
+            <Image alt="" src="/close.svg" width={20} height={20} />
           )}
         </Text>
       </div>

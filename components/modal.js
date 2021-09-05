@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Web3 from "web3";
-import Image from "next/image";
+import Image from "next/Image";
 import { useSelector, useDispatch } from "react-redux";
 
 import styles from "../styles/Modal.module.css";
@@ -152,7 +152,7 @@ const Modal = ({
           Approve your token
         </Text>
         <div style={{ cursor: "pointer" }} onClick={() => setIsModal(false)}>
-          <Image src="/close.svg" width={22} height={22} />
+          <Image alt="" src="/close.svg" width={22} height={22} />
         </div>
       </div>
       <div className={styles.modalBtn}>
@@ -170,6 +170,7 @@ const Modal = ({
     <div className={styles.modal}>
       <div className={styles.modalHeader}>
         <Image
+          alt=""
           className={styles.modalImg}
           src="/paymentComplete.svg"
           alt="headImg"
@@ -188,6 +189,7 @@ const Modal = ({
       </div>
       <div className={styles.modalFooter}>
         <Image
+          alt=""
           className={styles.modalImg}
           src="/tick.svg"
           alt="footImg1"
@@ -203,6 +205,7 @@ const Modal = ({
     <div className={styles.modal}>
       <div className={styles.modalHeader}>
         <Image
+          alt=""
           className={styles.modalImg}
           src="/paymentProcessing.svg"
           alt="headImg"
@@ -221,7 +224,7 @@ const Modal = ({
         </Text>
       </div>
       <div className={styles.modalFooter}>
-        <Image src="/loader.gif" alt="footImg1" width={20} height={20} />
+        <Image alt="" src="/loader.gif" alt="footImg1" width={20} height={20} />
         <Text fontSize="12px">Authenticating your payment</Text>
       </div>
     </div>
@@ -231,6 +234,7 @@ const Modal = ({
     <div className={styles.modal}>
       <div className={styles.modalHeader}>
         <Image
+          alt=""
           className={styles.modalImg}
           src="/paymentIncomplete.svg"
           alt="headImg"
@@ -248,7 +252,7 @@ const Modal = ({
         </Text>
       </div>
       <div className={styles.modalFooter}>
-        <Image src="/error.svg" alt="footImg1" width={20} height={20} />
+        <Image alt="" src="/error.svg" alt="footImg1" width={20} height={20} />
         <Text fontSize="12px" style={{ color: "#f65151" }}>
           Error code #1233
         </Text>
@@ -274,6 +278,7 @@ const Modal = ({
         </Text>
         <div style={{ cursor: "pointer" }}>
           <Image
+            alt=""
             src="/closeOutline.svg"
             width={20}
             height={20}
@@ -291,9 +296,9 @@ const Modal = ({
           onClick={() => handleConnect()}
         >
           {isConnecting ? (
-            <Image src="/loader.gif" width={22} height={22} />
+            <Image alt="" src="/loader.gif" width={22} height={22} />
           ) : (
-            <Image src="/metamask.svg" width={22} height={22} />
+            <Image alt="" src="/metamask.svg" width={22} height={22} />
           )}
           <Text component="span" variant="primary">
             Metamask Wallet
@@ -319,6 +324,7 @@ const Modal = ({
         <Text></Text>
         <span style={{ cursor: "pointer" }}>
           <Image
+            alt=""
             src="/closeOutline.svg"
             width={20}
             height={20}
@@ -336,13 +342,13 @@ const Modal = ({
     <div className={styles.modal}>
       <div className={styles.flexRow}>
         <div style={{ display: "flex", alignItems: "center" }}>
-          <Image src="/wrongNetwork.svg" width={26} height={26} />
+          <Image alt="" src="/wrongNetwork.svg" width={26} height={26} />
           <Text variant="primary" fontSize="18px" style={{ marginLeft: 8 }}>
             Wrong Network
           </Text>
         </div>
         <div style={{ cursor: "pointer" }}>
-          {/* <Image
+          {/* <Image  alt="" 
             src="/closeOutline.svg"
             width={20}
             height={20}
@@ -362,7 +368,7 @@ const Modal = ({
         >
           <Text>Binance Smart chain</Text>
           {chainId === "0x38" && (
-            <Image src="/checkwhite.svg" width={20} height={20} />
+            <Image alt="" src="/checkwhite.svg" width={20} height={20} />
           )}
         </div>
         <div
@@ -370,7 +376,7 @@ const Modal = ({
         >
           <Text>Etherium Mainnet</Text>
           {chainId === "0x1" && (
-            <Image src="/checkwhite.svg" width={20} height={20} />
+            <Image alt="" src="/checkwhite.svg" width={20} height={20} />
           )}
         </div>
         <div
@@ -378,7 +384,7 @@ const Modal = ({
         >
           <Text>Ropsten Network</Text>
           {chainId === "0x3" && (
-            <Image src="/checkwhite.svg" width={20} height={20} />
+            <Image alt="" src="/checkwhite.svg" width={20} height={20} />
           )}
         </div>
         <div
@@ -386,7 +392,7 @@ const Modal = ({
         >
           <Text>Goreli Test Network</Text>
           {chainId === "0x5" && (
-            <Image src="/checkwhite.svg" width={20} height={20} />
+            <Image alt="" src="/checkwhite.svg" width={20} height={20} />
           )}
         </div>
         <div
@@ -394,7 +400,7 @@ const Modal = ({
         >
           <Text>Binance Test Network</Text>
           {chainId === "0x61" && (
-            <Image src="/checkwhite.svg" width={20} height={20} />
+            <Image alt="" src="/checkwhite.svg" width={20} height={20} />
           )}
         </div>
       </div>
@@ -405,6 +411,7 @@ const Modal = ({
     <div className={isModal ? styles.modalActive : styles.modalInActive}>
       <div className={styles.flexCenter}>
         <Image
+          alt=""
           src={`/animation${winningChoice}.svg`}
           width={200}
           height={200}
