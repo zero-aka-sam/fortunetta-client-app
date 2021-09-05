@@ -158,7 +158,7 @@ const Contactus = () => {
           style={{ PointerEvents: isLoad ? "none" : null }}
         >
           {isLoad ? (
-            <Image src="/Gif.svg" width={16} height={16} />
+            <Image alt="" src="/Gif.svg" width={16} height={16} />
           ) : (
             "Send Message"
           )}
@@ -166,6 +166,7 @@ const Contactus = () => {
       </div>
       <div style={{ width: "100%" }}>
         <Image
+          alt=""
           src="/map.svg"
           layout="responsive"
           width={"400"}
@@ -178,7 +179,7 @@ const Contactus = () => {
   const renderSucessMessage = (
     <div className={styles.contactModal}>
       <div>
-        <Image src="/tick.svg" width={32} height={32} />
+        <Image alt="" src="/tick.svg" width={32} height={32} />
       </div>
       <div style={{ marginTop: "1em" }}>
         <Text variant="primary" style={{ marginBottom: 8 }}>

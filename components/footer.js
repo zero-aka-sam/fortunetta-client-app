@@ -55,11 +55,11 @@ const Footer = () => {
         Community
       </Text>
       <div className={styles.socialIcons} style={{ margin: "20px 0" }}>
-        <Image src="/facebook.svg" width={22} height={22} />
-        <Image src="/linkedin.svg" width={22} height={22} />
-        <Image src="/github.svg" width={22} height={22} />
-        <Image src="/youtube.svg" width={22} height={22} />
-        <Image src="/twitter.svg" width={22} height={22} />
+        <Image alt="" src="/facebook.svg" width={22} height={22} />
+        <Image alt="" src="/linkedin.svg" width={22} height={22} />
+        <Image alt="" src="/github.svg" width={22} height={22} />
+        <Image alt="" src="/youtube.svg" width={22} height={22} />
+        <Image alt="" src="/twitter.svg" width={22} height={22} />
       </div>
 
       <Text variant="primary" fontSize="16px">
@@ -67,7 +67,7 @@ const Footer = () => {
       </Text>
       <div style={{ marginTop: "20px", display: "flex", cursor: "pointer" }}>
         <span style={{ width: "100%" }}>
-          <Image src="/message.svg" width={15} height={15} />
+          <Image alt="" src="/message.svg" width={15} height={15} />
         </span>
         <Text component="span" fontSize="12px">
           hello@fortunetta.com
@@ -79,7 +79,7 @@ const Footer = () => {
   const renderFooter = (
     <div className={styles.footerContent}>
       <div>
-        <Image src="/logotext.png" width={190} height={29} />
+        <Image alt="" src="/logotext.png" width={190} height={29} />
         <Text fontSize="12px" style={{ marginTop: "20px" }}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Elit
           consectetur at egestas ut vitae et vitae. Augue aenean diam quis ut

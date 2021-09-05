@@ -14,7 +14,7 @@ const RewardsCard = ({ day, image, earned, btn_text }) => {
       <Text fontSize="12px">{day}</Text>
       <div className={styles.slot}>
         <div>
-          <Image src={image} width={"100%"} height={"auto"} />
+          <Image alt="" src={image} width={"100%"} height={"200px"} />
         </div>
         <Text fontSize="12px">{earned}</Text>
       </div>

@@ -57,7 +57,7 @@ const Chat = () => {
   const renderHeader = (
     <div className={styles.header}>
       <p className={styles.flexRow}>
-        <Image src="/language.svg" width={20} height={20} />
+        <Image alt="" src="/language.svg" width={20} height={20} />
         <Text
           component="span"
           variant="primary"
@@ -117,7 +117,7 @@ const Chat = () => {
 
   const renderNoChat = (
     <div className={styles.noChat}>
-      <Image src="/noMessage.svg" width={"260px"} height={"80px"} />
+      <Image alt="" src="/noMessage.svg" width={"260px"} height={"80px"} />
       <Text variant="primary" fontSize="14px">
         There’s no one in the chat yet
       </Text>
@@ -158,6 +158,7 @@ const Chat = () => {
           onClick={() => setMobileView(false)}
         >
           <Image
+            alt=""
             src="/chatclose_icon.svg"
             width={100}
             height={100}
@@ -170,7 +171,7 @@ const Chat = () => {
         className={styles.mobileOpenIcon}
         onClick={() => setMobileView(true)}
       >
-        <Image src="/chaticon.svg" width={100} height={100} />
+        <Image alt="" src="/chaticon.svg" width={100} height={100} />
       </span>
       {connectModal && <Modal variant="connect" setIsModal={setConnectModal} />}
     </>

@@ -463,7 +463,7 @@ const Roulette = ({ status }) => {
       </div>
       <div className={styles.rollSelectorContainer}>
         <div className={styles.rollSelector}>
-          <Image src={"/rollselector.svg"} width={30} height={300} />
+          <Image alt="" src={"/rollselector.svg"} width={30} height={300} />
         </div>
       </div>
       <div className={styles.container}>
@@ -588,7 +588,7 @@ const Roulette = ({ status }) => {
         )}
       </div>
       <div className={styles.input}>
-        <Image src="/coins.svg" width={20} height={20} />
+        <Image alt="" src="/coins.svg" width={20} height={20} />
         <input
           ref={amountInputRef}
           type="number"
@@ -827,7 +827,7 @@ const Roulette = ({ status }) => {
         </div>
         <div className={styles.roundBet} style={{ marginBottom: 10 }}>
           <div>
-            <Image src="/user.svg" width={20} height={20} />
+            <Image alt="" src="/user.svg" width={20} height={20} />
             <Text component="span" variant="primary" fontSize="12px">
               {_.uniqWith(betOnThree, _.isEqual)?.length} bets
             </Text>

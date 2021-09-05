@@ -170,7 +170,6 @@ const Modal = ({
     <div className={styles.modal}>
       <div className={styles.modalHeader}>
         <Image
-          alt=""
           className={styles.modalImg}
           src="/paymentComplete.svg"
           alt="headImg"
@@ -189,7 +188,6 @@ const Modal = ({
       </div>
       <div className={styles.modalFooter}>
         <Image
-          alt=""
           className={styles.modalImg}
           src="/tick.svg"
           alt="footImg1"
@@ -205,7 +203,6 @@ const Modal = ({
     <div className={styles.modal}>
       <div className={styles.modalHeader}>
         <Image
-          alt=""
           className={styles.modalImg}
           src="/paymentProcessing.svg"
           alt="headImg"
@@ -224,7 +221,7 @@ const Modal = ({
         </Text>
       </div>
       <div className={styles.modalFooter}>
-        <Image alt="" src="/loader.gif" alt="footImg1" width={20} height={20} />
+        <Image src="/loader.gif" alt="footImg1" width={20} height={20} />
         <Text fontSize="12px">Authenticating your payment</Text>
       </div>
     </div>
@@ -234,7 +231,6 @@ const Modal = ({
     <div className={styles.modal}>
       <div className={styles.modalHeader}>
         <Image
-          alt=""
           className={styles.modalImg}
           src="/paymentIncomplete.svg"
           alt="headImg"
@@ -252,7 +248,7 @@ const Modal = ({
         </Text>
       </div>
       <div className={styles.modalFooter}>
-        <Image alt="" src="/error.svg" alt="footImg1" width={20} height={20} />
+        <Image src="/error.svg" alt="footImg1" width={20} height={20} />
         <Text fontSize="12px" style={{ color: "#f65151" }}>
           Error code #1233
         </Text>

@@ -123,9 +123,14 @@ const AccountScreen = () => {
         <Text>Display Picture</Text>
         <div className={styles.imagePreview}>
           {formData.selectedFile ? (
-            <Image src={formData.selectedFile} width={200} height={200} />
+            <Image
+              alt=""
+              src={formData.selectedFile}
+              width={200}
+              height={200}
+            />
           ) : (
-            <Image src="/fortunettaLady.svg" width={200} height={200} />
+            <Image alt="" src="/fortunettaLady.svg" width={200} height={200} />
           )}
           {invalidFormat && (
             <Text fontSize="12px" style={{ color: "#F65151" }}>
