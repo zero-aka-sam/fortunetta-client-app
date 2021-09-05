@@ -1,0 +1,49 @@
+.sidebar {
+  position: fixed;
+  top: 90px;
+  right: 2em;
+  padding: 20px;
+  background: #141729;
+  border-radius: 8px;
+  width: 320px;
+  z-index: 1120;
+}
+
+.sidebarHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sidebarLinks {
+  margin: 1em 0 0;
+}
+
+.userModal {
+  position: fixed;
+  top: 80px;
+  right: 2em;
+  padding: 20px;
+  background: #141729;
+  border-radius: 8px;
+  width: 320px;
+  z-index: 1120;
+}
+
+.flexRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1em;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  z-index: 1100;
+}

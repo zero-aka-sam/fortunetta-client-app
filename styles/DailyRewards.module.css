@@ -1,0 +1,68 @@
+.rewards {
+  padding: 1em;
+}
+
+.rewardsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  grid-gap: 1.25em;
+}
+
+.rewardsCard {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.slot {
+  background: url(../public/dailyrewardsCard.svg), #141729;
+  min-height: 180px;
+  padding: 15px;
+  margin: 1.25em 0;
+  width: 100%;
+  border-radius: 5px;
+}
+
+.slot > div {
+  height: 80%;
+}
+
+.chestBlock {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 1.5em;
+  margin: 2em 0 1em;
+}
+
+.flexEnd {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+@media only screen and (max-width: 992px) {
+  .chestBlock {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .chestBlock {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .rewardsHeader {
+    flex-direction: column;
+  }
+  .flexEnd {
+    align-items: flex-start;
+    width: 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .chestBlock {
+    grid-template-columns: 1fr;
+  }
+}

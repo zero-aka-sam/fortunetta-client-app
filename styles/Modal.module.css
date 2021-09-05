@@ -1,0 +1,144 @@
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 320px;
+  max-width: 400px;
+  padding: 20px;
+  background: #141729;
+  border-radius: 8px;
+  z-index: 1150;
+}
+
+.modalInActive {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.5);
+  min-width: 320px;
+  max-width: 400px;
+  padding: 20px;
+  background: #141729;
+  border-radius: 8px;
+  z-index: 1150;
+  visibility: hidden;
+  transition: transform 500ms ease-in-out;
+}
+
+.modalActive {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  min-width: 320px;
+  max-width: 400px;
+  padding: 20px;
+  background: #141729;
+  border-radius: 8px;
+  z-index: 1150;
+  visibility: visible;
+  transition: transform 300ms ease-in-out;
+}
+
+.modalHeader,
+.modalFooter {
+  display: flex;
+  align-items: center;
+}
+
+.modalHeader > p {
+  margin-left: 1em;
+}
+
+.modalFooter > p {
+  margin-left: 1em;
+}
+
+.modalImg {
+  margin-right: 0.5em;
+}
+
+.modalBody {
+  display: flex;
+  align-items: center;
+}
+
+.retry_btn {
+  background: #191d33;
+  border-radius: 5px;
+  width: fit-content;
+  padding: 8px 1em;
+  display: flex;
+  align-items: center;
+}
+
+.flexRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  z-index: 1120;
+}
+
+.modalBtn {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 1em;
+}
+
+.network {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 15px;
+}
+
+.networkTrue {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 15px;
+  background: #191d33;
+  border-radius: 5px;
+}
+
+.flexCenter {
+  display: grid;
+  place-items: center;
+}
+
+.backdropInActive {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1050;
+  backdrop-filter: blur(0px);
+  visibility: hidden;
+  transition: backdrop-filter 0.2s ease-in-out;
+}
+
+.backdropActive {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1050;
+  visibility: visible;
+  backdrop-filter: blur(10px);
+  transition: backdrop-filter 0.2s ease-in-out;
+}

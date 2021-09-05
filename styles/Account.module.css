@@ -1,0 +1,100 @@
+.account {
+  padding: 1em;
+}
+
+.accountHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.accountDetails {
+  display: flex;
+  align-items: center;
+  margin: 2em 0;
+}
+
+.accountDetails > p {
+  display: flex;
+  align-items: center;
+}
+
+.accountDetails > p span {
+  margin-left: 8px;
+}
+
+.accountForm {
+  display: grid;
+  grid-template-columns: auto 300px;
+  grid-gap: 2.5em;
+}
+
+.accountForm section {
+  margin-bottom: 1.25em;
+}
+
+.accountForm section > p {
+  margin-bottom: 15px;
+}
+
+.accountForm section input,
+.accountForm section textarea {
+  width: 100%;
+  background: #0a0b15;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  padding: 15px;
+  font-size: 14px;
+  line-height: 20px;
+  color: #fff;
+  letter-spacing: 0.03em;
+  resize: none;
+  font-family: "excon_regular";
+}
+
+.accountForm section input::placeholder,
+.accountForm section textarea {
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.03em;
+  color: #c7beb7;
+  font-family: "excon_regular";
+}
+
+.imagePreview {
+  background: #171a2f;
+  box-shadow: 0px 2px 10px rgba(12, 18, 29, 0.15);
+  border-radius: 8px;
+  height: 300px;
+  display: grid;
+  place-items: center;
+}
+
+.fileInput > p,
+.fileInput > div {
+  margin-bottom: 1em;
+}
+
+.fileInput input {
+  display: none;
+}
+
+.fileInput label {
+  border: 1px solid #fdbb35;
+  padding: 10px 1.5em;
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.03em;
+  color: #d7d7d7;
+  border-radius: 8px;
+  margin-top: 1em;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 900px) {
+  .accountForm {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+}

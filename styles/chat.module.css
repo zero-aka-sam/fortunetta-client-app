@@ -1,0 +1,130 @@
+.chat {
+  background: #171a2f;
+  border-radius: 8px;
+  height: calc(100vh - 112px);
+  position: fixed;
+  right: 1em;
+  bottom: 1em;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 1000;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 20px 15px;
+  border-bottom: 0.5px solid #3d3d3d;
+}
+
+.flexRow {
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  padding: 0 20px 20px;
+}
+
+.input > input {
+  width: 100%;
+  background: #0a0b15;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  padding: 15px;
+  font-size: 14px;
+  line-height: 20px;
+  color: #fff;
+  letter-spacing: 0.03em;
+  font-family: "excon_regular";
+}
+
+.input > input::placeholder {
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: 0.03em;
+  color: #c7beb7;
+  font-family: "excon_regular";
+}
+
+.chatMessages {
+  height: 100%;
+  overflow: auto;
+  margin: 10px 0;
+  padding: 0 20px;
+}
+
+.chatMessages::-webkit-scrollbar {
+  display: none !important;
+}
+
+.message {
+  margin-bottom: 15px;
+}
+
+.messageHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.messageContent {
+  padding: 10px;
+  background: #1d213c;
+  position: relative;
+}
+
+.messageContent::before {
+  content: "";
+  background: #1d213c;
+  width: 10px;
+  height: 10px;
+  clip-path: polygon(0 0, 100% 75%, 100% 0);
+  position: absolute;
+  top: 0;
+  right: 100%;
+  z-index: 1;
+}
+
+.noChat {
+  height: 100%;
+  overflow: auto;
+  margin: 10px 0;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  grid-gap: 1em;
+  flex-direction: column;
+}
+
+.mobileOpenIcon {
+  position: fixed;
+  bottom: 2em;
+  left: 2em;
+  display: none;
+  cursor: pointer;
+  z-index: 1050;
+}
+
+.chatCloseIcon {
+  position: absolute;
+  left: calc(100% + 1em);
+  bottom: 2em;
+  width: 100%;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 576px) {
+  .chat {
+    display: none;
+  }
+  .mobileOpenIcon {
+    display: block;
+  }
+}
