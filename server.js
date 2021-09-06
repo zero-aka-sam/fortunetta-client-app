@@ -77,3 +77,5 @@ io.on("connection", (socket) => {
     }
   });
 });
+
+app.listen('/',()=>res.send('Homepage'));
