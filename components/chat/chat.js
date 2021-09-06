@@ -25,12 +25,9 @@ const Chat = () => {
   const user = useSelector((state) => state.user);
 
   useEffect(() => {
-    socket = io(
-      process.env.REACT_APP_PORT || "https://fortunetta.herokuapp.com/",
-      {
-        transports: ["websocket"],
-      }
-    );
+    socket = io(process.env.REACT_APP_PORT, {
+      transports: ["websocket"],
+    });
     socket.on("output_messages", (data) => {
       setMessageList(data);
     });
