@@ -78,4 +78,4 @@ io.on("connection", (socket) => {
   });
 });
 
-app.listen('/',()=>res.send('Homepage'));
+app.get('/',()=>res.send('Homepage'));
