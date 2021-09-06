@@ -25,7 +25,7 @@ const Chat = () => {
   const user = useSelector((state) => state.user);
 
   useEffect(() => {
-    socket = io(process.env.REACT_APP_PORT || "http://18.116.115.108:5000", {
+    socket = io(process.env.REACT_APP_PORT || "https://18.116.115.108:5000", {
       transports: ["websocket"],
     });
     socket.on("output_messages", (data) => {
