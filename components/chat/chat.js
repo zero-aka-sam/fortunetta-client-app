@@ -16,7 +16,6 @@ import Text from "../Text";
 import Modal from "../modal";
 
 let socket;
-const PORT = "http://localhost:5000";
 
 const Chat = () => {
   const [mobileView, setMobileView] = useState(false);
@@ -26,7 +25,9 @@ const Chat = () => {
   const user = useSelector((state) => state.user);
 
   useEffect(() => {
-    socket = io(PORT, { transports: ["websocket"] });
+    socket = io(process.env.REACT_APP_PORT || "https://18.116.115.108:5000", {
+      transports: ["websocket"],
+    });
     socket.on("output_messages", (data) => {
       setMessageList(data);
     });
@@ -67,7 +68,7 @@ const Chat = () => {
           English Room
         </Text>
       </p>
-      <Text fontSize="12px" style={{ color: "#FDBB35" }}>
+      <Text component="span" fontSize="12px" style={{ color: "#FDBB35" }}>
         {/* 1345 online */}
       </Text>
     </div>
