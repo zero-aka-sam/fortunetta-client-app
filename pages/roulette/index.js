@@ -30,7 +30,7 @@ import { getPreviousRolls } from "../../utils/components/getPreviousRolls";
 
 let socket;
 
-const countdownStartsFrom = 30;
+const countdownStartsFrom = 10;
 
 const Roulette = ({ status }) => {
   //INITIALIZING HOOKS
@@ -66,6 +66,7 @@ const Roulette = ({ status }) => {
   const [wrongNetwork, setWrongNetwork] = useState(false);
   const [chainId, setChaniId] = useState("");
   const [previousRolls, setPreviousRolls] = useState();
+  const [totalUsers, setTotalUsers] = useState([]);
 
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -97,6 +98,14 @@ const Roulette = ({ status }) => {
     } else {
       setInstallMetamask(true);
     }
+    socket.emit("join");
+  }, []);
+
+  useEffect(() => {
+    socket.on("userdata", ({ data }) => {
+      console.log(data);
+      setTotalUsers(data);
+    });
   }, []);
 
   useEffect(() => {
@@ -251,7 +260,7 @@ const Roulette = ({ status }) => {
 
   useEffect(() => {
     socket.on("countdown", (result) => {
-      if (result <= 0) {
+      if (result <= 1) {
         setCountdown(0);
         setProgressValue(0);
         setIsPlacedBet(false);
@@ -459,7 +468,7 @@ const Roulette = ({ status }) => {
             fontSize="12px"
             style={{ marginLeft: 8 }}
           >
-            256 users online
+            {totalUsers.length} users online
           </Text>
         </div>
       </div>
@@ -548,7 +557,7 @@ const Roulette = ({ status }) => {
       <Text component="div" variant="secondary" fontWeight="500">
         Bet amount
       </Text>
-      <div
+      {/* <div
         className={styles.betFormReturnControls}
         style={{ pointerEvents: isBet ? "none" : null }}
       >
@@ -588,7 +597,7 @@ const Roulette = ({ status }) => {
         {types && (
           <div className={styles.typeToaster}>select one of these type</div>
         )}
-      </div>
+      </div> */}
       <div className={styles.input}>
         <Image alt="" src="/coins.svg" width={20} height={20} />
         <input
@@ -627,16 +636,23 @@ const Roulette = ({ status }) => {
       <Text component="div" fontSize="12px">
         Your max profit can only be upto $50,000
       </Text>
-      <Button
-        className="primary_btn"
-        onClick={() => checkBet(choice)}
-        style={{
-          pointerEvents: (isBet || lockTill) && "none",
-          opacity: (isBet || lockTill) && "0.5",
-        }}
-      >
-        {lockTill ? lockTill : "Bet"}
-      </Button>
+      <aside className={styles.placebid_btn}>
+        <Button
+          className="primary_btn"
+          onClick={() => checkBet(choice)}
+          style={{
+            pointerEvents: (isBet || lockTill) && "none",
+            opacity: (isBet || lockTill) && "0.5",
+          }}
+        >
+          {lockTill ? lockTill : "Bet"}
+        </Button>
+        {lockTill && (
+          <span>
+            you placed a bet recently please wait untill {lockTill} secs
+          </span>
+        )}
+      </aside>
     </section>
   );
 
@@ -722,11 +738,22 @@ const Roulette = ({ status }) => {
   const renderTeams = (
     <div className={styles.teams}>
       <div className={styles.rounds}>
-        <div className={styles.roundBet} style={{ marginBottom: 20 }}>
-          <Text variant="primary" fontSize="32px">
-            2x
-          </Text>
-          <Text variant="primary">Place Bet</Text>
+        <div
+          className={styles.roundBet_header}
+          style={{ marginBottom: 20 }}
+          onClick={() => {
+            setTab(1);
+            setChoice(1);
+          }}
+        >
+          <Image
+            src="/animation1.svg"
+            alt="icon"
+            width={32}
+            height={32}
+            objectFit="contain"
+            layout="fixed"
+          />
         </div>
         <div className={styles.roundBet} style={{ marginBottom: 10 }}>
           <div>
@@ -771,11 +798,22 @@ const Roulette = ({ status }) => {
         )}
       </div>
       <div className={styles.rounds}>
-        <div className={styles.roundBet} style={{ marginBottom: 20 }}>
-          <Text variant="primary" fontSize="32px">
-            14x
-          </Text>
-          <Text variant="primary">Place Bet</Text>
+        <div
+          className={styles.roundBet_header}
+          style={{ marginBottom: 20 }}
+          onClick={() => {
+            setTab(2);
+            setChoice(2);
+          }}
+        >
+          <Image
+            src="/animation2.svg"
+            alt="icon"
+            width={32}
+            height={32}
+            objectFit="contain"
+            layout="fixed"
+          />
         </div>
         <div className={styles.roundBet} style={{ marginBottom: 10 }}>
           <div>
@@ -821,11 +859,22 @@ const Roulette = ({ status }) => {
         )}
       </div>
       <div className={styles.rounds}>
-        <div className={styles.roundBet} style={{ marginBottom: 20 }}>
-          <Text variant="primary" fontSize="32px">
-            2x
-          </Text>
-          <Text variant="primary">Place Bet</Text>
+        <div
+          className={styles.roundBet_header}
+          style={{ marginBottom: 20 }}
+          onClick={() => {
+            setTab(3);
+            setChoice(3);
+          }}
+        >
+          <Image
+            src="/animation3.svg"
+            alt="icon"
+            width={32}
+            height={32}
+            objectFit="contain"
+            layout="fixed"
+          />
         </div>
         <div className={styles.roundBet} style={{ marginBottom: 10 }}>
           <div>

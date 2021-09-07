@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import io from "socket.io-client";
 import Image from "next/image";
 import moment from "moment";
@@ -18,10 +18,12 @@ import Modal from "../modal";
 let socket;
 
 const Chat = () => {
+  const inputRef = useRef();
   const [mobileView, setMobileView] = useState(false);
   const [connectModal, setConnectModal] = useState(false);
   const [message, setMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
+  const [msgSent, setMsgSent] = useState(false);
   const user = useSelector((state) => state.user);
 
   useEffect(() => {
@@ -40,20 +42,25 @@ const Chat = () => {
   }, [messageList]);
 
   const handleSubmit = (e) => {
+    // console.log(inputRef.current.value);
     if (e.key === "Enter") {
       if (user?.UserID) {
         setConnectModal(false);
         let Content = {
           message,
-          userId: user?.UserID,
+          userId: user?.address,
         };
-        setMessage(null);
         socket.emit("send_message", Content);
+        setMsgSent(!msgSent);
       } else {
         setConnectModal(true);
       }
     }
   };
+
+  useEffect(() => {
+    setMessage("");
+  }, [msgSent]);
 
   const renderHeader = (
     <div className={styles.header}>
@@ -89,7 +96,12 @@ const Chat = () => {
                   fontWeight="500"
                   style={{ marginLeft: 8 }}
                 >
-                  {`#${messages?.userId}`}
+                  {`#${messages?.userId?.slice(
+                    0,
+                    4
+                  )}...${messages?.userId?.slice(
+                    messages?.userId?.length - 4
+                  )}`}
                 </Text>
               </p>
               <Text fontSize="12px">
@@ -134,6 +146,7 @@ const Chat = () => {
       <input
         type="text"
         placeholder="Type your message here"
+        value={message}
         onChange={(e) => setMessage(e.target.value)}
         onKeyPress={(e) => handleSubmit(e)}
       />
