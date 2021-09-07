@@ -107,7 +107,7 @@ export const operator = (socket) => {
     if (res) {
       if (res.event === "betPlaced") {
         const userAddress = getUserAddress(res.returnValues[0]);
-        console.log("UserID:", res.returnValues[0]);
+        console.log("UserID:", userAddress);
         console.log("Choice:", res.returnValues[1]);
         console.log("Amount:", res.returnValues[2]);
         (placeBetDetails.userId = userAddress),
@@ -132,7 +132,8 @@ export const operator = (socket) => {
       const winningChoice = await Contract.methods
         .getRoundInfo(web3Ws.eth.abi(["uint256"], res.returnValues[0]))
         .call();
-      socket.emit("winningChoice", res.returnValues[9]);
+      console.log(winningChoice);
+      socket.emit("winningChoice", winningChoice[9]);
     }
   });
 
