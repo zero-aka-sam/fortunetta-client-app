@@ -8,6 +8,7 @@ import {
 import { ethers } from "ethers";
 import client from "./artifacts/client.js";
 import controller from "./artifacts/controller.js";
+import { getUserAddress } from "./utils/getAddress.js";
 
 export const operator = (socket) => {
   const web3Ws = new Web3(
@@ -101,14 +102,15 @@ export const operator = (socket) => {
 
   const events = Contract.events.allEvents();
 
-  events.subscribe((err, res) => {
+  events.subscribe(async (err, res) => {
     let placeBetDetails = new Object();
     if (res) {
       if (res.event === "betPlaced") {
+        const userAddress = getUserAddress(res.returnValues[0]);
         console.log("UserID:", res.returnValues[0]);
         console.log("Choice:", res.returnValues[1]);
         console.log("Amount:", res.returnValues[2]);
-        (placeBetDetails.userId = res.returnValues[0]),
+        (placeBetDetails.userId = userAddress),
           (placeBetDetails.choice = res.returnValues[1]),
           (placeBetDetails.amount = res.returnValues[2]),
           socket.emit("betPlaced", placeBetDetails);

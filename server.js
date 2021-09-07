@@ -62,6 +62,8 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     const data = removeUser(socket.id);
 
+    console.log(data);
+
     socket.emit("userdata", { data });
   });
   //EMITTING ALL THE CHATS FROM DATABASE

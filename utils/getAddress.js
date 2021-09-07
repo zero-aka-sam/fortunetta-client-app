@@ -1,6 +1,6 @@
 import Web3 from "web3";
 
-async function getUserAddress(_id) {
+export async function getUserAddress(_id) {
   const web3 = new Web3(
     new Web3.providers.HttpProvider(
       "https://ropsten.infura.io/v3/cfa16a251a12472c875781773eedf03f"

@@ -7,7 +7,13 @@ export const addUser = (id) => {
 };
 
 export const removeUser = (id) => {
-  users.filter((user) => user === id);
+  const index = users.findIndex((user) => user === id);
+
+  if (index !== -1) {
+    users.splice(index, 1)[0];
+
+    return users;
+  }
 
   return users;
 };
