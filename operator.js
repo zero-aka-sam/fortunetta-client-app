@@ -13,12 +13,12 @@ import { getUserAddress } from "./utils/getAddress.js";
 export const operator = (socket) => {
   const web3Ws = new Web3(
     new Web3.providers.WebsocketProvider(
-      "wss://ropsten.infura.io/ws/v3/c0367bfc1b5f47f5bba0427b5212038e"
+      "wss://ropsten.infura.io/ws/v3/cfa16a251a12472c875781773eedf03f"
     )
   );
 
   const eth = new ethers.providers.WebSocketProvider(
-    "wss://ropsten.infura.io/ws/v3/c0367bfc1b5f47f5bba0427b5212038e"
+    "wss://ropsten.infura.io/ws/v3/cfa16a251a12472c875781773eedf03f"
   );
 
   const currentStatus = Promise.resolve(eth.getBlockNumber()).then(
