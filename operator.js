@@ -12,7 +12,7 @@ import controller from "./artifacts/controller.js";
 export const operator = (socket) => {
   const web3Ws = new Web3(
     new Web3.providers.WebsocketProvider(
-      "wss://bsc.getblock.io/testnet/?api_key=0399cb06-5a32-4e68-97a7-c0b9bb21e53c"
+      "wss://ropsten.infura.io/ws/v3/c0367bfc1b5f47f5bba0427b5212038e"
     )
   );
 
