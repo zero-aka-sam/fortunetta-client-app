@@ -6,7 +6,7 @@ const bscv = require("../artifacts/bscv.js");
 
 const web3 = new Web3(
   new Web3.providers.HttpProvider(
-    "https://ropsten.infura.io/v3/c0367bfc1b5f47f5bba0427b5212038e"
+    "https://ropsten.infura.io/v3/cfa16a251a12472c875781773eedf03f"
   )
 );
 
