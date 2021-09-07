@@ -275,7 +275,7 @@ const Roulette = ({ status }) => {
       }
       if (result > 0) setRollingEnd(false);
       else setRollingEnd(true);
-      if (result > 5) setIsBet(false);
+      if (result > 3) setIsBet(false);
       else setIsBet(true);
       if (result === countdownStartsFrom) {
         setIsBet(false);
@@ -763,7 +763,9 @@ const Roulette = ({ status }) => {
             objectFit="contain"
             layout="fixed"
           />
-          <Text variant="primary">Place Bet</Text>
+          <aside className={tab === 1 ? styles.selected : styles.select}>
+            <Text variant="primary">{tab === 1 ? "selected" : "select"}</Text>
+          </aside>
         </div>
         <div className={styles.roundBet} style={{ marginBottom: 10 }}>
           <div>
@@ -796,7 +798,12 @@ const Roulette = ({ status }) => {
             </Text>
             <section>
               <Text variant="secondary" fontWeight="500" fontSize="12px">
-                {`#${heighestBidOnOne?.userId}`}
+                {`#${heighestBidOnOne?.userId?.slice(
+                  0,
+                  4
+                )}...${heighestBidOnOne?.userId?.slice(
+                  heighestBidOnOne?.userId?.length - 4
+                )}`}
               </Text>
               <Text fontSize="12px">{heighestBidOnOne?.amount}</Text>
             </section>
@@ -824,7 +831,9 @@ const Roulette = ({ status }) => {
             objectFit="contain"
             layout="fixed"
           />
-          <Text variant="primary">Place Bet</Text>
+          <aside className={tab === 2 ? styles.selected : styles.select}>
+            <Text variant="primary">{tab === 2 ? "selected" : "select"}</Text>
+          </aside>
         </div>
         <div className={styles.roundBet} style={{ marginBottom: 10 }}>
           <div>
@@ -858,7 +867,12 @@ const Roulette = ({ status }) => {
             </Text>
             <section>
               <Text variant="secondary" fontWeight="500" fontSize="12px">
-                {`#${heighestBidOnTwo?.userId}`}
+                {`#${heighestBidOnTwo?.userId?.slice(
+                  0,
+                  4
+                )}...${heighestBidOnTwo?.userId?.slice(
+                  heighestBidOnTwo?.userId?.length - 4
+                )}`}
               </Text>
               <Text fontSize="12px">{heighestBidOnTwo?.amount}</Text>
             </section>
@@ -886,7 +900,9 @@ const Roulette = ({ status }) => {
             objectFit="contain"
             layout="fixed"
           />
-          <Text variant="primary">Place Bet</Text>
+          <aside className={tab === 3 ? styles.selected : styles.select}>
+            <Text variant="primary">{tab === 3 ? "selected" : "select"}</Text>
+          </aside>
         </div>
         <div className={styles.roundBet} style={{ marginBottom: 10 }}>
           <div>
@@ -919,7 +935,12 @@ const Roulette = ({ status }) => {
             </Text>
             <section>
               <Text variant="secondary" fontWeight="500" fontSize="12px">
-                {`#${heighestBidOnThree?.userId}`}
+                {`#${heighestBidOnThree?.userId?.slice(
+                  0,
+                  4
+                )}...${heighestBidOnThree?.userId?.slice(
+                  heighestBidOnThree?.userId?.length - 4
+                )}`}
               </Text>
               <Text fontSize="12px">{heighestBidOnThree?.amount}</Text>
             </section>
