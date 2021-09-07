@@ -4,18 +4,21 @@ import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import userRouter from "./routes/user.js";
 import http from "http";
+import dotenv from "dotenv";
+dotenv.config();
 import { Server } from "socket.io";
 import Chat from "./models/chat.js";
 import { operator } from "./operator.js";
-
 const app = express();
 
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "https://awesome-perlman-8281d8.netlify.app/",
+    origin: "http://localhost:3000/",
+    credentials: true,
     methods: ["GET", "POST"],
   },
+  transports: ["websocket"],
 });
 
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
@@ -37,6 +40,10 @@ const connect = mongoose
   .catch((error) => console.log(`${error} did not connect`));
 
 app.use("/user", userRouter);
+
+app.get("/", (req, res) => {
+  res.send("Homepage");
+});
 
 server.listen(PORT, () => {
   console.log(`Server Running at ${PORT}`);
@@ -77,5 +84,3 @@ io.on("connection", (socket) => {
     }
   });
 });
-
-app.get('/',()=>res.send('Homepage'));
