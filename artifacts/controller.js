@@ -27,6 +27,25 @@ const controller = {
       inputs: [
         {
           indexed: true,
+          internalType: "uint256",
+          name: "index",
+          type: "uint256",
+        },
+        {
+          indexed: true,
+          internalType: "uint256",
+          name: "amount",
+          type: "uint256",
+        },
+      ],
+      name: "DailyRewardsDistributed",
+      type: "event",
+    },
+    {
+      anonymous: false,
+      inputs: [
+        {
+          indexed: true,
           internalType: "address",
           name: "previousGuard",
           type: "address",
@@ -45,28 +64,9 @@ const controller = {
       anonymous: false,
       inputs: [
         {
-          indexed: true,
-          internalType: "uint32",
-          name: "day",
-          type: "uint32",
-        },
-        {
-          indexed: true,
+          indexed: false,
           internalType: "uint256",
-          name: "amount",
-          type: "uint256",
-        },
-      ],
-      name: "dailyRewardDistributed",
-      type: "event",
-    },
-    {
-      anonymous: false,
-      inputs: [
-        {
-          indexed: true,
-          internalType: "uint256",
-          name: "_choice",
+          name: "_id",
           type: "uint256",
         },
       ],
@@ -115,35 +115,6 @@ const controller = {
     {
       inputs: [
         {
-          internalType: "uint256",
-          name: "_level",
-          type: "uint256",
-        },
-        {
-          internalType: "uint256",
-          name: "_condition",
-          type: "uint256",
-        },
-        {
-          internalType: "uint256",
-          name: "_multiplier",
-          type: "uint256",
-        },
-      ],
-      name: "addLevel",
-      outputs: [
-        {
-          internalType: "string",
-          name: "message",
-          type: "string",
-        },
-      ],
-      stateMutability: "nonpayable",
-      type: "function",
-    },
-    {
-      inputs: [
-        {
           internalType: "address",
           name: "_user",
           type: "address",
@@ -173,30 +144,6 @@ const controller = {
       type: "function",
     },
     {
-      inputs: [
-        {
-          internalType: "uint32",
-          name: "",
-          type: "uint32",
-        },
-        {
-          internalType: "uint32",
-          name: "",
-          type: "uint32",
-        },
-      ],
-      name: "dailyRewardInfo",
-      outputs: [
-        {
-          internalType: "uint256",
-          name: "",
-          type: "uint256",
-        },
-      ],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
       inputs: [],
       name: "dailyRewardInterval",
       outputs: [
@@ -217,19 +164,6 @@ const controller = {
           internalType: "uint256",
           name: "",
           type: "uint256",
-        },
-      ],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [],
-      name: "day",
-      outputs: [
-        {
-          internalType: "uint32",
-          name: "",
-          type: "uint32",
         },
       ],
       stateMutability: "view",
@@ -275,7 +209,13 @@ const controller = {
         },
       ],
       name: "finishRound",
-      outputs: [],
+      outputs: [
+        {
+          internalType: "uint256",
+          name: "",
+          type: "uint256",
+        },
+      ],
       stateMutability: "nonpayable",
       type: "function",
     },
@@ -300,44 +240,6 @@ const controller = {
           internalType: "address",
           name: "",
           type: "address",
-        },
-      ],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [
-        {
-          internalType: "uint256",
-          name: "",
-          type: "uint256",
-        },
-      ],
-      name: "levelConditions",
-      outputs: [
-        {
-          internalType: "uint256",
-          name: "",
-          type: "uint256",
-        },
-      ],
-      stateMutability: "view",
-      type: "function",
-    },
-    {
-      inputs: [
-        {
-          internalType: "uint256",
-          name: "",
-          type: "uint256",
-        },
-      ],
-      name: "levelMultiplier",
-      outputs: [
-        {
-          internalType: "uint256",
-          name: "",
-          type: "uint256",
         },
       ],
       stateMutability: "view",
@@ -454,7 +356,7 @@ const controller = {
     },
     {
       inputs: [],
-      name: "totalRewardsDistributed",
+      name: "since",
       outputs: [
         {
           internalType: "uint256",

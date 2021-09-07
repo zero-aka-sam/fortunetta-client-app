@@ -125,10 +125,12 @@ export const operator = (socket) => {
 
   const events2 = Contract2.events.allEvents();
 
-  events2.subscribe((err, res) => {
+  events2.subscribe(async (err, res) => {
     if (res.event === "finishedRound") {
-      console.log("Choice", res.returnValues[0]);
-      socket.emit("winningChoice", res.returnValues[0]);
+      const winningChoice = await Contract.methods
+        .getRoundInfo(web3Ws.eth.abi(["uint256"], res.returnValues[0]))
+        .call();
+      socket.emit("winningChoice", res.returnValues[9]);
     }
   });
 
