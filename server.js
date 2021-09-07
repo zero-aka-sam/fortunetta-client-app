@@ -9,6 +9,7 @@ dotenv.config();
 import { Server } from "socket.io";
 import Chat from "./models/chat.js";
 import { operator } from "./operator.js";
+import { addUser, removeUser } from "./users.js";
 const app = express();
 
 const server = http.createServer(app);
@@ -52,6 +53,17 @@ server.listen(PORT, () => {
 io.on("connection", (socket) => {
   operator(socket);
 
+  socket.on("join", () => {
+    const data = addUser(socket.id);
+
+    socket.emit("userdata", { data });
+  });
+
+  socket.on("disconnect", () => {
+    const data = removeUser(socket.id);
+
+    socket.emit("userdata", { data });
+  });
   //EMITTING ALL THE CHATS FROM DATABASE
 
   Chat.find().then((result) => {
