@@ -80,7 +80,9 @@ const Roulette = ({ status }) => {
   });
 
   useEffect(() => {
-    socket = io(process.env.REACT_APP_PORT, { transports: ["websocket"] });
+    socket = io("http://localhost:5000", {
+      transports: ["websocket"],
+    });
     if (typeof window.ethereum !== "undefined") {
       setInstallMetamask(false);
       let chainID = window.ethereum.chainId;
