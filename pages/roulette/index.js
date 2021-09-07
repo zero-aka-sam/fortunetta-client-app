@@ -84,6 +84,9 @@ const Roulette = ({ status }) => {
     socket = io("http://18.116.115.108:5000", {
       transports: ["websocket"],
     });
+    // socket = io("http://localhost:5000", {
+    //   transports: ["websocket"],
+    // });
     if (typeof window.ethereum !== "undefined") {
       setInstallMetamask(false);
       let chainID = window.ethereum.chainId;
@@ -124,9 +127,9 @@ const Roulette = ({ status }) => {
       res?.bettingAddressesOnOne?.map(async (address, i) => {
         res?.bettingAmountsOnOne?.map(async (amount, j) => {
           if (i === j) {
-            const userId = await getUserId(address);
+            // const userId = await getUserId(address);
             let bets = {
-              userId: userId,
+              userId: address,
               amount: web3.utils.fromWei(amount, "ether"),
             };
             setBetOnOne((betOnOne) => [...betOnOne, bets]);
@@ -138,9 +141,9 @@ const Roulette = ({ status }) => {
       res?.bettingAddressesOnTwo?.map(async (address, i) => {
         res?.bettingAmountsOnTwo?.map(async (amount, j) => {
           if (i === j) {
-            const userId = await getUserId(address);
+            // const userId = await getUserId(address);
             let bets = {
-              userId: userId,
+              userId: address,
               amount: web3.utils.fromWei(amount, "ether"),
             };
             setBetOnTwo((betOnTwo) => [...betOnTwo, bets]);
@@ -152,9 +155,9 @@ const Roulette = ({ status }) => {
       res?.bettingAddressesOnThree?.map(async (address, i) => {
         res?.bettingAmountsOnThree?.map(async (amount, j) => {
           if (i === j) {
-            const userId = await getUserId(address);
+            // const userId = await getUserId(address);
             let bets = {
-              userId: userId,
+              userId: address,
               amount: web3.utils.fromWei(amount, "ether"),
             };
             setBetOnThree((betOnThree) => [...betOnThree, bets]);
@@ -284,7 +287,7 @@ const Roulette = ({ status }) => {
   useEffect(() => {
     if (countdown >= 0) {
       let val = ((countdownStartsFrom - countdown) / countdownStartsFrom) * 100;
-      setProgressValue(Math.round(val));
+      setProgressValue(val);
     }
   }, [countdown]);
 
@@ -660,7 +663,9 @@ const Roulette = ({ status }) => {
     return (
       <div className={styles.roundBet} key={index}>
         <Text variant="secondary" fontWeight="500" fontSize="12px">
-          {`#${res.userId}`}
+          {`#${res.userId?.slice(0, 4)}...${res.userId?.slice(
+            res.userId?.length - 4
+          )}`}
         </Text>
         <Text fontSize="12px">{res.amount}</Text>
       </div>
@@ -671,7 +676,9 @@ const Roulette = ({ status }) => {
     return (
       <div className={styles.roundBet} key={index}>
         <Text variant="secondary" fontWeight="500" fontSize="12px">
-          {`#${res.userId}`}
+          {`#${res.userId?.slice(0, 4)}...${res.userId?.slice(
+            res.userId?.length - 4
+          )}`}
         </Text>
         <Text fontSize="12px">{res.amount}</Text>
       </div>
@@ -683,7 +690,9 @@ const Roulette = ({ status }) => {
       return (
         <div className={styles.roundBet} key={index}>
           <Text variant="secondary" fontWeight="500" fontSize="12px">
-            {`#${res.userId}`}
+            {`#${res.userId?.slice(0, 4)}...${res.userId?.slice(
+              res.userId?.length - 4
+            )}`}
           </Text>
           <Text fontSize="12px">{res.amount}</Text>
         </div>
@@ -739,7 +748,7 @@ const Roulette = ({ status }) => {
     <div className={styles.teams}>
       <div className={styles.rounds}>
         <div
-          className={styles.roundBet_header}
+          className={styles.roundBet}
           style={{ marginBottom: 20 }}
           onClick={() => {
             setTab(1);
@@ -754,6 +763,7 @@ const Roulette = ({ status }) => {
             objectFit="contain"
             layout="fixed"
           />
+          <Text variant="primary">Place Bet</Text>
         </div>
         <div className={styles.roundBet} style={{ marginBottom: 10 }}>
           <div>
@@ -799,7 +809,7 @@ const Roulette = ({ status }) => {
       </div>
       <div className={styles.rounds}>
         <div
-          className={styles.roundBet_header}
+          className={styles.roundBet}
           style={{ marginBottom: 20 }}
           onClick={() => {
             setTab(2);
@@ -814,6 +824,7 @@ const Roulette = ({ status }) => {
             objectFit="contain"
             layout="fixed"
           />
+          <Text variant="primary">Place Bet</Text>
         </div>
         <div className={styles.roundBet} style={{ marginBottom: 10 }}>
           <div>
@@ -860,7 +871,7 @@ const Roulette = ({ status }) => {
       </div>
       <div className={styles.rounds}>
         <div
-          className={styles.roundBet_header}
+          className={styles.roundBet}
           style={{ marginBottom: 20 }}
           onClick={() => {
             setTab(3);
@@ -875,6 +886,7 @@ const Roulette = ({ status }) => {
             objectFit="contain"
             layout="fixed"
           />
+          <Text variant="primary">Place Bet</Text>
         </div>
         <div className={styles.roundBet} style={{ marginBottom: 10 }}>
           <div>

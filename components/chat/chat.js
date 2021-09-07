@@ -45,13 +45,15 @@ const Chat = () => {
     // console.log(inputRef.current.value);
     if (e.key === "Enter") {
       if (user?.UserID) {
-        setConnectModal(false);
-        let Content = {
-          message,
-          userId: user?.address,
-        };
-        socket.emit("send_message", Content);
-        setMsgSent(!msgSent);
+        if (message) {
+          setConnectModal(false);
+          let Content = {
+            message,
+            userId: user?.address,
+          };
+          socket.emit("send_message", Content);
+          setMsgSent(!msgSent);
+        }
       } else {
         setConnectModal(true);
       }
