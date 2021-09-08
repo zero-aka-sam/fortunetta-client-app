@@ -106,11 +106,11 @@ export const operator = (socket) => {
     let placeBetDetails = new Object();
     if (res) {
       if (res.event === "betPlaced") {
-        const userAddress = getUserAddress(res.returnValues[0]);
+        const userAddress = await getUserAddress(res.returnValues[0]);
         console.log("UserID:", userAddress);
         console.log("Choice:", res.returnValues[1]);
         console.log("Amount:", res.returnValues[2]);
-        (placeBetDetails.userId = userAddress),
+        (placeBetDetails.userId = String(userAddress)),
           (placeBetDetails.choice = res.returnValues[1]),
           (placeBetDetails.amount = res.returnValues[2]),
           socket.emit("betPlaced", placeBetDetails);

@@ -5,12 +5,15 @@ import bodyParser from "body-parser";
 import userRouter from "./routes/user.js";
 import http from "http";
 import dotenv from "dotenv";
-dotenv.config();
 import { Server } from "socket.io";
 import Chat from "./models/chat.js";
 import { operator } from "./operator.js";
 import { addUser, removeUser } from "./users.js";
+
 const app = express();
+dotenv.config();
+
+let count = 0;
 
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -52,19 +55,12 @@ server.listen(PORT, () => {
 
 io.on("connection", (socket) => {
   operator(socket);
-
-  socket.on("join", () => {
-    const data = addUser(socket.id);
-
-    socket.emit("userdata", { data });
-  });
+  count++;
+  io.sockets.emit("userdata", count);
 
   socket.on("disconnect", () => {
-    const data = removeUser(socket.id);
-
-    console.log(data);
-
-    socket.emit("userdata", { data });
+    count--;
+    io.sockets.emit("userdata", count);
   });
   //EMITTING ALL THE CHATS FROM DATABASE
 
