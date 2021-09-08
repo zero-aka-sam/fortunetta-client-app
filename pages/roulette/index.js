@@ -66,7 +66,7 @@ const Roulette = ({ status }) => {
   const [wrongNetwork, setWrongNetwork] = useState(false);
   const [chainId, setChaniId] = useState("");
   const [previousRolls, setPreviousRolls] = useState();
-  const [totalUsers, setTotalUsers] = useState([]);
+  const [totalUsers, setTotalUsers] = useState(0);
 
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -81,12 +81,12 @@ const Roulette = ({ status }) => {
   });
 
   useEffect(() => {
-    socket = io("http://18.116.115.108:5000", {
-      transports: ["websocket"],
-    });
-    // socket = io("http://localhost:5000", {
+    // socket = io("http://18.116.115.108:5000", {
     //   transports: ["websocket"],
     // });
+    socket = io("http://localhost:5000", {
+      transports: ["websocket"],
+    });
     if (typeof window.ethereum !== "undefined") {
       setInstallMetamask(false);
       let chainID = window.ethereum.chainId;
@@ -101,15 +101,13 @@ const Roulette = ({ status }) => {
     } else {
       setInstallMetamask(true);
     }
-    socket.emit("join");
   }, []);
 
   useEffect(() => {
-    socket.on("userdata", ({ data }) => {
-      console.log(data);
-      setTotalUsers(data);
+    socket.on("userdata", (count) => {
+      setTotalUsers(count);
     });
-  }, []);
+  }, [totalUsers]);
 
   useEffect(() => {
     handleInitialRound();
@@ -263,13 +261,15 @@ const Roulette = ({ status }) => {
 
   useEffect(() => {
     socket.on("countdown", (result) => {
-      if (result <= 1) {
+      if (result < 1) {
         setCountdown(0);
         setProgressValue(0);
         setIsPlacedBet(false);
         setBetOnOne([]);
         setBetOnTwo([]);
         setBetOnThree([]);
+        setTab();
+        setChoice();
       } else {
         setCountdown(result);
       }
@@ -471,7 +471,7 @@ const Roulette = ({ status }) => {
             fontSize="12px"
             style={{ marginLeft: 8 }}
           >
-            {totalUsers.length} users online
+            {Math.floor(totalUsers / 2)} users online
           </Text>
         </div>
       </div>
@@ -747,23 +747,22 @@ const Roulette = ({ status }) => {
   const renderTeams = (
     <div className={styles.teams}>
       <div className={styles.rounds}>
-        <div
-          className={styles.roundBet}
-          style={{ marginBottom: 20 }}
-          onClick={() => {
-            setTab(1);
-            setChoice(1);
-          }}
-        >
+        <div className={styles.roundBet} style={{ marginBottom: 20 }}>
           <Image
             src="/animation1.svg"
             alt="icon"
-            width={32}
-            height={32}
+            width={40}
+            height={40}
             objectFit="contain"
             layout="fixed"
           />
-          <aside className={tab === 1 ? styles.selected : styles.select}>
+          <aside
+            className={tab === 1 ? styles.selected : styles.select}
+            onClick={() => {
+              setTab(1);
+              setChoice(1);
+            }}
+          >
             <Text variant="primary">{tab === 1 ? "selected" : "select"}</Text>
           </aside>
         </div>
@@ -815,23 +814,22 @@ const Roulette = ({ status }) => {
         )}
       </div>
       <div className={styles.rounds}>
-        <div
-          className={styles.roundBet}
-          style={{ marginBottom: 20 }}
-          onClick={() => {
-            setTab(2);
-            setChoice(2);
-          }}
-        >
+        <div className={styles.roundBet} style={{ marginBottom: 20 }}>
           <Image
             src="/animation2.svg"
             alt="icon"
-            width={32}
-            height={32}
+            width={40}
+            height={40}
             objectFit="contain"
             layout="fixed"
           />
-          <aside className={tab === 2 ? styles.selected : styles.select}>
+          <aside
+            className={tab === 2 ? styles.selected : styles.select}
+            onClick={() => {
+              setTab(2);
+              setChoice(2);
+            }}
+          >
             <Text variant="primary">{tab === 2 ? "selected" : "select"}</Text>
           </aside>
         </div>
@@ -884,23 +882,22 @@ const Roulette = ({ status }) => {
         )}
       </div>
       <div className={styles.rounds}>
-        <div
-          className={styles.roundBet}
-          style={{ marginBottom: 20 }}
-          onClick={() => {
-            setTab(3);
-            setChoice(3);
-          }}
-        >
+        <div className={styles.roundBet} style={{ marginBottom: 20 }}>
           <Image
             src="/animation3.svg"
             alt="icon"
-            width={32}
-            height={32}
+            width={40}
+            height={40}
             objectFit="contain"
             layout="fixed"
           />
-          <aside className={tab === 3 ? styles.selected : styles.select}>
+          <aside
+            className={tab === 3 ? styles.selected : styles.select}
+            onClick={() => {
+              setTab(3);
+              setChoice(3);
+            }}
+          >
             <Text variant="primary">{tab === 3 ? "selected" : "select"}</Text>
           </aside>
         </div>

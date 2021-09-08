@@ -53,7 +53,13 @@ const UserModal = ({ setIsModal }) => {
       </div>
       <div className={styles.flexRow}>
         <Text></Text>
-        <Button className="secondary_btn" onClick={() => handleWithdraw()}>
+        <Button
+          className="secondary_btn"
+          style={{ opacity: Number(user?.PendingRewards) > 0 ? "1" : "0.7" }}
+          onClick={
+            Number(user?.PendingRewards) > 0 ? () => handleWithdraw() : null
+          }
+        >
           Withdraw
         </Button>
       </div>

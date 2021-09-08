@@ -34,14 +34,29 @@ export const getBalanceOfUser = async () => {
 const Header = () => {
   const [sidebar, setSidebar] = useState(false);
   const [isModal, setIsModal] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [successModal, setSuccessModal] = useState(false);
+  const [processModal, setProcessModal] = useState(false);
+  const [errorModal, setErrorModal] = useState(false);
   const [connectModal, setConnectModal] = useState(false);
   const user = useSelector((state) => state.user);
 
   const handleFreeBscv = async () => {
-    setIsLoading(true);
-    await getFreeBSCV();
-    setIsLoading(false);
+    setProcessModal(true);
+    try {
+      await getFreeBSCV();
+      setProcessModal(false);
+      setSuccessModal(true);
+      setTimeout(() => {
+        setSuccessModal(false);
+      }, 3000);
+    } catch (error) {
+      console.log(error);
+      setProcessModal(false);
+      setErrorModal(true);
+      setTimeout(() => {
+        setErrorModal(false);
+      }, 3000);
+    }
   };
 
   const renderNavigationMenu = (
@@ -83,8 +98,8 @@ const Header = () => {
         className="primary_btn"
         onClick={() => handleFreeBscv()}
         style={{
-          pointerEvents: isLoading ? "none" : null,
-          opacity: isLoading ? "0.75" : "1",
+          pointerEvents: processModal ? "none" : null,
+          opacity: processModal ? "0.75" : "1",
         }}
       >
         Get Free BSCV
@@ -146,6 +161,9 @@ const Header = () => {
         isModal={connectModal}
         setIsModal={setConnectModal}
       />
+      {processModal && <Modal variant="processing" />}
+      {successModal && <Modal variant="success" />}
+      {errorModal && <Modal variant="error" />}
     </>
   );
 };
