@@ -12,15 +12,9 @@ import controller from "./artifacts/controller.js";
 import { wssUrl } from "./artifacts/RPCURL.js";
 
 export const operator = (socket) => {
-  const web3Ws = new Web3(
-    new Web3.providers.WebsocketProvider(
-      wssUrl
-    )
-  );
+  const web3Ws = new Web3(new Web3.providers.WebsocketProvider(wssUrl));
 
-  const eth = new ethers.providers.WebSocketProvider(
-    wssUrl
-  );
+  const eth = new ethers.providers.WebSocketProvider(wssUrl);
 
   const currentStatus = Promise.resolve(eth.getBlockNumber()).then(
     async (res) => {
@@ -48,6 +42,7 @@ export const operator = (socket) => {
               socket.emit("currenBlock", block);
               const countdown = res[2] - block;
               if (countdown === 0) {
+                socket.emit("countdown", countdown);
                 await finishRound();
               } else {
                 console.log(countdown);
@@ -107,7 +102,9 @@ export const operator = (socket) => {
     let placeBetDetails = new Object();
     if (res) {
       if (res.event === "betPlaced") {
-        const userAddress = await Contract.methods.getUserAddress(res.returnValues[0]).call();
+        const userAddress = await Contract.methods
+          .getUserAddress(res.returnValues[0])
+          .call();
         console.log("UserID:", userAddress);
         console.log("Choice:", res.returnValues[1]);
         console.log("Amount:", res.returnValues[2]);
@@ -117,7 +114,8 @@ export const operator = (socket) => {
           socket.emit("betPlaced", placeBetDetails);
       }
       if (res.event === "roundCreated") {
-        console.log("New Round:", res.returnValues[0]);s
+        console.log("New Round:", res.returnValues[0]);
+        s;
       }
     }
   });
