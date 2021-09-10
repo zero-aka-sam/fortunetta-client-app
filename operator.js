@@ -8,17 +8,18 @@ import {
 import { ethers } from "ethers";
 import client from "./artifacts/client.js";
 import controller from "./artifacts/controller.js";
-import { getUserAddress } from "./utils/getAddress.js";
+//import { getUserAddress } from "./utils/getAddress.js";
+import { wssUrl } from "./artifacts/RPCURL.js";
 
 export const operator = (socket) => {
   const web3Ws = new Web3(
     new Web3.providers.WebsocketProvider(
-      "wss://ropsten.infura.io/ws/v3/cfa16a251a12472c875781773eedf03f"
+      wssUrl
     )
   );
 
   const eth = new ethers.providers.WebSocketProvider(
-    "wss://ropsten.infura.io/ws/v3/cfa16a251a12472c875781773eedf03f"
+    wssUrl
   );
 
   const currentStatus = Promise.resolve(eth.getBlockNumber()).then(
@@ -106,7 +107,7 @@ export const operator = (socket) => {
     let placeBetDetails = new Object();
     if (res) {
       if (res.event === "betPlaced") {
-        const userAddress = await getUserAddress(res.returnValues[0]);
+        const userAddress = await Contract.methods.getUserAddress(res.returnValues[0]).call();
         console.log("UserID:", userAddress);
         console.log("Choice:", res.returnValues[1]);
         console.log("Amount:", res.returnValues[2]);
@@ -116,7 +117,7 @@ export const operator = (socket) => {
           socket.emit("betPlaced", placeBetDetails);
       }
       if (res.event === "roundCreated") {
-        console.log("New Round:", res.returnValues[0]);
+        console.log("New Round:", res.returnValues[0]);s
       }
     }
   });
@@ -129,11 +130,7 @@ export const operator = (socket) => {
 
   events2.subscribe(async (err, res) => {
     if (res.event === "finishedRound") {
-      const winningChoice = await Contract.methods
-        .getRoundInfo(web3Ws.eth.abi(["uint256"], res.returnValues[0]))
-        .call();
-      console.log(winningChoice);
-      socket.emit("winningChoice", winningChoice[9]);
+      socket.emit("winningChoice", res.returnValues[1]);
     }
   });
 

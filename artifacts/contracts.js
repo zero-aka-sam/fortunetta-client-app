@@ -5,7 +5,7 @@ import controller from "./controller.js";
 
 const web3 = new Web3(
   new Web3.providers.HttpProvider(
-    "https://ropsten.infura.io/v3/cfa16a251a12472c875781773eedf03f"
+    "https://rinkeby.infura.io/v3/cfa16a251a12472c875781773eedf03f"
   )
 );
 

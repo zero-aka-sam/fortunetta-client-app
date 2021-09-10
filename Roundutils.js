@@ -1,13 +1,15 @@
 import Web3 from "web3";
 import controller from "./artifacts/controller.js";
-import { Client } from "./artifacts/contracts.js";
+import { httpUrl } from "./artifacts/RPCURL.js";
+
 let privateKey =
-  "0ea9e2d55c083444976fcf1e878131c32c09789c2b713b1d5f14f8ecc843a9db";
-let myAddress = "0x9F9bA619216F7B104fb309245eaefc388F642B16";
+  "b1aa49b10abb39d55af1912335a7e1a0968e946b9fad34a70d8bfe2f5c24954c";
+let myAddress = "0x6f2b3Ccd825F8182505E209AcE7b4576369E54AB";
 
 const provider = new Web3.providers.HttpProvider(
-  "https://ropsten.infura.io/v3/c0367bfc1b5f47f5bba0427b5212038e"
+  httpUrl
 );
+
 const web3Ws = new Web3(provider);
 
 const contract = new web3Ws.eth.Contract(controller.abi, controller.address);
@@ -99,12 +101,31 @@ export async function finishRound() {
   }
 }
 
+const States = {
+  Processing: '1',
+  NonProcessing: '0'
+}
+
+let status = States.NonProcessing;
+
 const signAndSendTransaction = async (txnData, privateKey, provider) => {
-  return await provider.eth.accounts
-    .signTransaction(txnData, "0x".concat(privateKey))
-    .then((res) => {
-      return provider.eth.sendSignedTransaction(res.rawTransaction);
-    });
+  switch (status) {
+    case States.NonProcessing:
+
+      status = States.Processing;
+
+      await provider.eth.accounts
+        .signTransaction(txnData, "0x".concat(privateKey))
+        .then((res) => {
+          return provider.eth.sendSignedTransaction(res.rawTransaction);
+        });
+      status = States.NonProcessing;
+      break;
+    case States.Processing:
+      console.log("processing");
+      break;
+  }
+  
 };
 
 export async function distributeDailyRewards() {
@@ -126,6 +147,6 @@ export async function distributeDailyRewards() {
       };
       return tx;
     })
-    .then(async (tx) => await sendSignedTransaction(tx, privateKey, web3Ws))
+    .then(async (tx) => await signAndSendTransaction(tx, privateKey, web3Ws))
     .then(console.log("dailyRewardsDistributed"));
 }
