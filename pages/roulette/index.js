@@ -23,7 +23,7 @@ import Button from "../../components/button";
 
 //IMPORTING UTILITY PACKAGES
 
-import client from "../../utils/config/artifacts/client";
+import client from "../../config/artifacts/client";
 import { getUserInfo, getUserId } from "../../utils/components/getUserInfo";
 import { round } from "../../utils/components/getCurrentRoundId";
 import { getPreviousRolls } from "../../utils/components/getPreviousRolls";
@@ -92,7 +92,7 @@ const Roulette = ({ status }) => {
       let chainID = window.ethereum.chainId;
       setChaniId(chainID);
       console.log(chainID);
-      if (chainID === "0x3") {
+      if (chainID === "0x4") {
         setWrongNetwork(false);
         handleConnect();
       } else {

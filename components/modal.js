@@ -11,7 +11,7 @@ import Text from "./Text";
 import { getBalanceOfUser } from "./header";
 import { getUserInfo } from "../utils/components/getUserInfo";
 import { getFreeBSCV } from "../utils/components/freeBSCV";
-import client from "../utils/config/artifacts/client";
+import client from "../config/artifacts/client";
 import { getBSCV } from "../utils/components/getWeb3";
 
 const Modal = ({
