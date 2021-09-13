@@ -22,77 +22,85 @@ export const operator = (socket) => {
         await Client.methods
           .currentRound()
           .call()
+          .catch(async (err) => {
+            await createRound();
+          })
           .then(async (round) => {
-            if (round[2] < res) {
-              await finishRound();
+            if (round !== undefined) {
+              if (round[2] < res) {
+                await finishRound();
+              }
             }
           });
-      } catch (err) {
-        await createRound();
-      }
+      } catch (err) {}
     }
   );
 
-  try {
-    eth.on("block", (block, err) => {
-      if (!err) {
-        try {
-          Promise.resolve(Client.methods.currentRound().call())
-            .then(async (res) => {
-              socket.emit("currenBlock", block);
-              const countdown = res[2] - block;
-              if (countdown === 0) {
-                socket.emit("countdown", countdown);
-                await finishRound();
-              } else {
-                console.log(countdown);
-                socket.emit("countdown", countdown);
-              }
-            })
-            .then(async () => {
-              const rewardBLock = await Controller.methods
-                .nextdailyRewardAt()
-                .call();
-              return rewardBLock;
-            })
-            .then(async (dailyRewardBlock) => {
-              if (dailyRewardBlock === block) {
-                await distributeDailyRewards();
-              } else {
-                // console.log("nextRewardAt:",dailyRewardBlock)
-                socket.emit("nextReward", dailyRewardBlock);
-              }
-            });
-        } catch (err) {
-          console.log("try Error:", err);
+  eth.on("block", async (block, err) => {
+    if (!err) {
+      try {
+        // Promise.resolve(Client.methods.currentRound().call())
+        //   .catch((err) => {
+        //     "Round Not Created";
+        //   })
+        const currentRound = await Client.methods
+          .currentRound()
+          .call()
+          .catch(async (err) => {
+            console.log("Round Not Created");
+            await createRound();
+          });
+        console.log(currentRound);
+        if (currentRound !== undefined) {
+          //CurrentBlock
+          socket.emit("currenBlock", block);
+          const countdown = currentRound[2] - block;
+          if (countdown <= 0) {
+            socket.emit("countdown", countdown);
+            await finishRound();
+          } else {
+            console.log(countdown);
+            socket.emit("countdown", countdown);
+          }
+
+          const rewardBLock = await Controller.methods
+            .nextdailyRewardAt()
+            .call();
+
+          if (rewardBLock === block) {
+            await distributeDailyRewards();
+          } else {
+            // console.log("nextRewardAt:",dailyRewardBlock)
+            socket.emit("nextReward", rewardBLock);
+          }
         }
+      } catch (err) {
+        console.log("try Error:", err);
       }
-      if (err) {
-        console.log("Block err::");
-      }
-      // try {
-      //   if(block){
-      //   const Round = await Client.methods.currentRound().call();}
-      //   catch (err) {
-      //     console.log("round not created");
-      //   }
-      //   const countdown = Round[2] - block;
+    }
+    if (err) {
+      console.log("Block err::");
+    }
+    // try {
+    //   if(block){
+    //   const Round = await Client.methods.currentRound().call();}
+    //   catch (err) {
+    //     console.log("round not created");
+    //   }
+    //   const countdown = Round[2] - block;
 
-      //   if (countdown === 0) {
-      //     await finishRound();
-      //   } else {
-      //     console.log(countdown);
-      //     socket.emit("countdown", countdown);
-      //     console.log("RoundID:", Round[0]);
-      //     socket.emit("RoundID", Round[0]);
-      //   }
-      // }else{
+    //   if (countdown === 0) {
+    //     await finishRound();
+    //   } else {
+    //     console.log(countdown);
+    //     socket.emit("countdown", countdown);
+    //     console.log("RoundID:", Round[0]);
+    //     socket.emit("RoundID", Round[0]);
+    //   }
+    // }else{
 
-      // }
-    });
-  } catch {
-    console.log("Block event err:");
-  }
+    // }
+  });
 
   const Contract = new web3Ws.eth.Contract(client.abi, client.address);
 
@@ -102,8 +110,8 @@ export const operator = (socket) => {
     let placeBetDetails = {
       userId: String,
       choice: Number,
-      amount: Number
-    }
+      amount: Number,
+    };
     if (res) {
       if (res.event === "betPlaced") {
         const userAddress = await Contract.methods
@@ -113,9 +121,9 @@ export const operator = (socket) => {
         console.log("Choice:", res.returnValues[1]);
         console.log("Amount:", res.returnValues[2]);
         placeBetDetails.userId = String(userAddress);
-        placeBetDetails.choice = web3Ws.eth.abi.decodeParameter('uint256',res.returnValues[1]);
-        placeBetDetails.amount = web3Ws.eth.abi.decodeParameter('uint256',res.returnValues[2]);
-          socket.emit("betPlaced", placeBetDetails);
+        placeBetDetails.choice = res.returnValues[1];
+        placeBetDetails.amount = res.returnValues[2];
+        socket.emit("betPlaced", placeBetDetails);
       }
       if (res.event === "roundCreated") {
         console.log("New Round:", res.returnValues[0]);
