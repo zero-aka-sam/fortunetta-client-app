@@ -1,5 +1,5 @@
 const bscv = {
-  address: "0x8bDC53C8F35FA16fB5E4eD9A30fECB045dCdaaCC",
+  address: "0x496bca67B51Fea8Ee4Cfdb04e34B84DD54E53802",
   abi: [
 	{
 		"inputs": [

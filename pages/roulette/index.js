@@ -92,7 +92,7 @@ const Roulette = ({ status }) => {
       let chainID = window.ethereum.chainId;
       setChaniId(chainID);
       console.log(chainID);
-      if (chainID === "0x4") {
+      if (chainID === "0x61") {
         setWrongNetwork(false);
         handleConnect();
       } else {

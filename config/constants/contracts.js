@@ -3,10 +3,11 @@ const Web3 = require("web3");
 const client = require("../artifacts/client.js");
 const controller = require("../artifacts/controller.js");
 const bscv = require("../artifacts/bscv.js");
+const { httpUrl } = require("../artifacts/RPCURL.js");
 
 const web3 = new Web3(
   new Web3.providers.HttpProvider(
-    "https://rinkeby.infura.io/v3/cfa16a251a12472c875781773eedf03f"
+    httpUrl
   )
 );
 
