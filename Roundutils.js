@@ -6,9 +6,7 @@ let privateKey =
   "b1aa49b10abb39d55af1912335a7e1a0968e946b9fad34a70d8bfe2f5c24954c";
 let myAddress = "0x6f2b3Ccd825F8182505E209AcE7b4576369E54AB";
 
-const provider = new Web3.providers.HttpProvider(
-  httpUrl
-);
+const provider = new Web3.providers.HttpProvider(httpUrl);
 
 const web3Ws = new Web3(provider);
 
@@ -51,7 +49,11 @@ export async function createRound() {
         return tx;
       })
       .then(async (tx) => await signAndSendTransaction(tx, privateKey, web3Ws))
-      .then((tx) => console.log("roundCreated"));
+      .then((tx) => {
+        if (tx !== 0) {
+          console.log("roundCreated");
+        }
+      });
   } catch (err) {
     console.log("Create Round err");
   }
@@ -92,40 +94,32 @@ export async function finishRound() {
         return tx;
       })
       .then(async (tx) => await signAndSendTransaction(tx, privateKey, web3Ws))
-      .then(() => console.log("round finished"))
-      .then(() => {
-        createRound();
+      .then((tx) => {
+        if (tx !== 0) {
+          console.log("roundFinished");
+        }
+      })
+      .then(async () => {
+        await createRound();
       });
   } catch (err) {
     console.log("finishRound err:");
   }
 }
 
-const States = {
-  Processing: '1',
-  NonProcessing: '0'
-}
+// const States = {
+//   Processing: "1",
+//   NonProcessing: "0",
+// };
 
-let status = States.NonProcessing;
+// let status = States.NonProcessing;
 
 const signAndSendTransaction = async (txnData, privateKey, provider) => {
-  switch (status) {
-    case States.NonProcessing:
-
-      status = States.Processing;
-
-      await provider.eth.accounts
-        .signTransaction(txnData, "0x".concat(privateKey))
-        .then((res) => {
-          return provider.eth.sendSignedTransaction(res.rawTransaction);
-        });
-      status = States.NonProcessing;
-      break;
-    case States.Processing:
-      console.log("processing");
-      break;
-  }
-  
+  await provider.eth.accounts
+    .signTransaction(txnData, "0x".concat(privateKey))
+    .then(async (res) => {
+      await provider.eth.sendSignedTransaction(res.rawTransaction);
+    });
 };
 
 export async function distributeDailyRewards() {

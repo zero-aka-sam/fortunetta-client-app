@@ -41,7 +41,7 @@ export const operator = (socket) => {
             .then(async (res) => {
               socket.emit("currenBlock", block);
               const countdown = res[2] - block;
-              if (countdown === 0) {
+              if (countdown === 0 || countdown < 0) {
                 socket.emit("countdown", countdown);
                 await finishRound();
               } else {
