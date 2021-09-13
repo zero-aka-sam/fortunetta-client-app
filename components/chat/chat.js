@@ -27,12 +27,12 @@ const Chat = () => {
   const user = useSelector((state) => state.user);
 
   useEffect(() => {
-    // socket = io("http://18.116.115.108:5000", {
-    //   transports: ["websocket"],
-    // });
-    socket = io("http://localhost:5000", {
+    socket = io("http://18.116.115.108:5000", {
       transports: ["websocket"],
     });
+    // socket = io("http://localhost:5000", {
+    //   transports: ["websocket"],
+    // });
     socket.on("output_messages", (data) => {
       setMessageList(data);
     });
