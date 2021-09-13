@@ -40,13 +40,13 @@ export async function createRound() {
         });
         return { data: res.data, gas: res.gas, gasPrice: gasPrice };
       })
-      .then((res) => {
+      .then(async(res) => {
+   
         const tx = {
           from: myAddress,
           to: controller.address,
           data: res.data,
           gas: res.gas,
-          gasPrice: res.gasPrice,
         };
         return tx;
       })
@@ -82,14 +82,14 @@ export async function finishRound() {
         return { data: res, gas: gas + 10 };
       })
 
-      .then((res) => {
+      .then(async(res) => {
         const tx = {
           from: myAddress,
           to: controller.address,
           data: res.data,
           gas: res.gas,
         };
-        return tx;
+        return tx
       })
       .then(async (tx) => await signAndSendTransaction(tx, privateKey, web3Ws))
       .then(() => console.log("round finished"))
@@ -111,18 +111,15 @@ let status = States.NonProcessing;
 const signAndSendTransaction = async (txnData, privateKey, provider) => {
   switch (status) {
     case States.NonProcessing:
-
       status = States.Processing;
-
       await provider.eth.accounts
-        .signTransaction(txnData, "0x".concat(privateKey))
-        .then((res) => {
-          return provider.eth.sendSignedTransaction(res.rawTransaction);
-        });
-      status = States.NonProcessing;
+        .signTransaction(txnData, "0x".concat(privateKey),async(err,Transaction)=>{await provider.eth.sendSignedTransaction(Transaction.rawTransaction,(err,res)=>{if(res){status = States.NonProcessing;}});})
       break;
     case States.Processing:
       console.log("processing");
+      break;
+    
+    default:
       break;
   }
   

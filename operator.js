@@ -104,20 +104,24 @@ export const operator = (socket) => {
   const events = Contract.events.allEvents();
 
   events.subscribe(async (err, res) => {
-    let placeBetDetails = new Object();
+    let placeBetDetails = {
+      userId: String,
+      choice: Number,
+      amount: Number
+    }
     if (res) {
       if (res.event === "betPlaced") {
         const userAddress = await Contract.methods.getUserAddress(res.returnValues[0]).call();
         console.log("UserID:", userAddress);
         console.log("Choice:", res.returnValues[1]);
         console.log("Amount:", res.returnValues[2]);
-        (placeBetDetails.userId = String(userAddress)),
-          (placeBetDetails.choice = res.returnValues[1]),
-          (placeBetDetails.amount = res.returnValues[2]),
+        placeBetDetails.userId = String(userAddress);
+        placeBetDetails.choice = web3Ws.eth.abi.decodeParameter('uint256',res.returnValues[1]);
+        placeBetDetails.amount = web3Ws.eth.abi.decodeParameter('uint256',res.returnValues[2]);
           socket.emit("betPlaced", placeBetDetails);
       }
       if (res.event === "roundCreated") {
-        console.log("New Round:", res.returnValues[0]);s
+        console.log("New Round:", res.returnValues[0]);
       }
     }
   });
