@@ -8,7 +8,6 @@ import dotenv from "dotenv";
 import { Server } from "socket.io";
 import Chat from "./models/chat.js";
 import { operator } from "./operator.js";
-import { addUser, removeUser } from "./users.js";
 
 const app = express();
 dotenv.config();
