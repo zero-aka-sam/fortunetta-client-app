@@ -1,5 +1,11 @@
-const httpUrl = "https://rinkeby.infura.io/v3/cfa16a251a12472c875781773eedf03f";
+// const httpUrl = "https://eth-goerli.alchemyapi.io/v2/D5kxbtxct8lcFD6zWv00xovq8C0mk4Q6";
 
-const wssUrl = "wss://rinkeby.infura.io/ws/v3/cfa16a251a12472c875781773eedf03f";
+// const wssUrl = "wss://eth-goerli.alchemyapi.io/v2/D5kxbtxct8lcFD6zWv00xovq8C0mk4Q6";
 
-export {httpUrl,wssUrl}
+const apiKey = "82544d86-170f-4173-b989-e8f027762281";
+
+const httpUrl = "https://bsc.getblock.io/testnet/?api_key=".concat(apiKey);
+
+const wssUrl = "wss://bsc.getblock.io/testnet/?api_key=".concat(apiKey);
+
+export { httpUrl, wssUrl };

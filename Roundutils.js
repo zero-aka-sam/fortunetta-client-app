@@ -38,26 +38,28 @@ export async function createRound() {
         });
         return { data: res.data, gas: res.gas, gasPrice: gasPrice };
       })
-      .then((res) => {
+      .then(async (res) => {
         const tx = {
           from: myAddress,
           to: controller.address,
           data: res.data,
           gas: res.gas,
-          gasPrice: res.gasPrice,
         };
         return tx;
       })
       .then(async (tx) => await signAndSendTransaction(tx, privateKey, web3Ws))
       .then((tx) => {
-        if (tx !== 0) {
-          console.log("roundCreated");
+        if (tx === "Processing") {
+          console.log("Processing");
+        } else if (tx === "Processed") {
+          console.log("Processed");
         }
       });
   } catch (err) {
     console.log("Create Round err");
   }
   //const txn = ;
+  return 0;
 }
 
 export async function finishRound() {
@@ -84,7 +86,7 @@ export async function finishRound() {
         return { data: res, gas: gas + 10 };
       })
 
-      .then((res) => {
+      .then(async (res) => {
         const tx = {
           from: myAddress,
           to: controller.address,
@@ -93,33 +95,63 @@ export async function finishRound() {
         };
         return tx;
       })
-      .then(async (tx) => await signAndSendTransaction(tx, privateKey, web3Ws))
-      .then((tx) => {
-        if (tx !== 0) {
-          console.log("roundFinished");
+      .then(
+        async (tx) => await signAndSendTransaction(tx, privateKey, web3Ws),
+        (err) => {
+          console.log("err");
         }
-      })
-      .then(async () => {
-        await createRound();
+      )
+      .then(async (tx) => {
+        if (tx === "Processing") {
+          console.log("FinishRound Processing");
+        } else {
+          console.log("round finished");
+          await createRound();
+        }
       });
   } catch (err) {
     console.log("finishRound err:");
   }
+  return 0;
 }
 
-// const States = {
-//   Processing: "1",
-//   NonProcessing: "0",
-// };
+const States = {
+  Processing: "1",
+  NonProcessing: "0",
+};
 
-// let status = States.NonProcessing;
+let status = States.NonProcessing;
+let count = 0;
 
 const signAndSendTransaction = async (txnData, privateKey, provider) => {
-  await provider.eth.accounts
-    .signTransaction(txnData, "0x".concat(privateKey))
-    .then(async (res) => {
-      await provider.eth.sendSignedTransaction(res.rawTransaction);
-    });
+  switch (status) {
+    case States.NonProcessing:
+      status = States.Processing;
+      await provider.eth.accounts.signTransaction(
+        txnData,
+        "0x".concat(privateKey),
+        async (err, Transaction) => {
+          await provider.eth.sendSignedTransaction(
+            Transaction.rawTransaction,
+            (err, res) => {
+              if (res) {
+              }
+            }
+          );
+        }
+      );
+      return "Processed";
+      break;
+    case States.Processing:
+      //console.log("processing");
+      count++;
+      if (count > 5) {
+        status = States.NonProcessing;
+        count = 0;
+      }
+      return "Processing";
+      break;
+  }
 };
 
 export async function distributeDailyRewards() {
