@@ -81,18 +81,18 @@ const Roulette = ({ status }) => {
   });
 
   useEffect(() => {
-    socket = io("http://18.116.115.108:5000", {
-      transports: ["websocket"],
-    });
-    // socket = io("http://localhost:5000", {
+    // socket = io("http://18.116.115.108:5000", {
     //   transports: ["websocket"],
     // });
+    socket = io("http://localhost:5000", {
+      transports: ["websocket"],
+    });
     if (typeof window.ethereum !== "undefined") {
       setInstallMetamask(false);
       let chainID = window.ethereum.chainId;
       setChaniId(chainID);
       console.log(chainID);
-      if (chainID === "0x4") {
+      if (chainID === "0x61") {
         setWrongNetwork(false);
         handleConnect();
       } else {
