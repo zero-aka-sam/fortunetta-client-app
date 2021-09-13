@@ -1,5 +1,5 @@
 const controller = {
-  address: "0x3Dbe864BCB68291b86BB19106785865F3e97C463",
+  address: "0xcda467D761005cb2E8B28bf89bF3956ed8EF4307",
   abi: [
 	{
 		"inputs": [

@@ -1,5 +1,5 @@
 export const Bank = {
-  address: "0x4316BFF3A4AdA10897Db4c63F6edc4DacDa4B3EF",
+  address: "0xa39B05c469891C7a0dB3bAdAAc9E9dE0c0EF030D",
   abi: [
 	{
 		"anonymous": false,
