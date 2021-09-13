@@ -81,12 +81,12 @@ const Roulette = ({ status }) => {
   });
 
   useEffect(() => {
-    // socket = io("http://18.116.115.108:5000", {
-    //   transports: ["websocket"],
-    // });
-    socket = io("http://localhost:5000", {
+    socket = io("http://18.116.115.108:5000", {
       transports: ["websocket"],
     });
+    // socket = io("http://localhost:5000", {
+    //   transports: ["websocket"],
+    // });
     if (typeof window.ethereum !== "undefined") {
       setInstallMetamask(false);
       let chainID = window.ethereum.chainId;
@@ -449,6 +449,107 @@ const Roulette = ({ status }) => {
     </>
   );
 
+  const renderBettingImages = (
+    <>
+      <img
+        src="/animation1.svg"
+        width={"110px"}
+        height={"113px"}
+        alt=""
+        objectFit="contain"
+        layout="fixed"
+      />
+      <Image
+        src="/animation3.svg"
+        width={"110px"}
+        height={"113px"}
+        alt=""
+        objectFit="contain"
+        layout="fixed"
+      />
+      <Image
+        src="/animation2.svg"
+        width={"110px"}
+        height={"113px"}
+        alt=""
+        objectFit="contain"
+        layout="fixed"
+      />
+      <img
+        src="/animation1.svg"
+        width={"110px"}
+        height={"113px"}
+        alt=""
+        objectFit="contain"
+        layout="fixed"
+      />
+      <Image
+        src="/animation3.svg"
+        width={"110px"}
+        height={"113px"}
+        alt=""
+        objectFit="contain"
+        layout="fixed"
+      />
+      <Image
+        src="/animation2.svg"
+        width={"110px"}
+        height={"113px"}
+        alt=""
+        objectFit="contain"
+        layout="fixed"
+      />
+      <Image
+        src="/animation1.svg"
+        width={"110px"}
+        height={"113px"}
+        alt=""
+        objectFit="contain"
+        layout="fixed"
+      />
+      <Image
+        src="/animation3.svg"
+        width={"110px"}
+        height={"113px"}
+        alt=""
+        objectFit="contain"
+        layout="fixed"
+      />
+      <Image
+        src="/animation2.svg"
+        width={"110px"}
+        height={"113px"}
+        alt=""
+        objectFit="contain"
+        layout="fixed"
+      />
+      <img
+        src="/animation1.svg"
+        width={"110px"}
+        height={"113px"}
+        alt=""
+        objectFit="contain"
+        layout="fixed"
+      />
+      <Image
+        src="/animation3.svg"
+        width={"110px"}
+        height={"113px"}
+        alt=""
+        objectFit="contain"
+        layout="fixed"
+      />
+      <Image
+        src="/animation2.svg"
+        width={"110px"}
+        height={"113px"}
+        alt=""
+        objectFit="contain"
+        layout="fixed"
+      />
+    </>
+  );
+
   const renderRoulette = (
     <div className={styles.roulette}>
       <div className={styles.rouletteHeader} style={{ marginBottom: 20 }}>
@@ -492,12 +593,12 @@ const Roulette = ({ status }) => {
             ? renderWinningBetTwo
             : winningChoice === "3"
             ? renderWinningBetThree
-            : renderWinningBetTwo}
+            : renderBettingImages}
         </div>
       </div>
       <div className={styles.rouletteTimer} style={{ margin: "1em 0" }}>
         <Text variant="secondary">
-          {rollingEnd ? "Rolling Finished :" : "Rolling starts in :"}
+          {rollingEnd ? "Please wait it's processing :" : "Rolling starts in :"}
         </Text>
         <div className={styles.progressBarContainer}>
           <div
