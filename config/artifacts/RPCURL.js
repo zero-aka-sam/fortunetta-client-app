@@ -2,7 +2,7 @@
 
 // const wssUrl = "wss://eth-goerli.alchemyapi.io/v2/D5kxbtxct8lcFD6zWv00xovq8C0mk4Q6";
 
-const apiKey = "82544d86-170f-4173-b989-e8f027762281";
+const apiKey = "d5db7538-e398-468a-a968-4068eff4312f";
 
 const httpUrl = "https://bsc.getblock.io/testnet/?api_key=".concat(apiKey);
 
