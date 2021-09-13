@@ -749,7 +749,11 @@ const Roulette = ({ status }) => {
             opacity: (isBet || lockTill) && "0.5",
           }}
         >
-          {lockTill ? lockTill : "Bet"}
+          {types
+            ? "select one of the type to Bet"
+            : lockTill
+            ? lockTill
+            : "Bet"}
         </Button>
         {lockTill && (
           <span>
