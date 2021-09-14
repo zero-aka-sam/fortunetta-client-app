@@ -17,8 +17,8 @@ let count = 0;
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    // origin: "http://18.116.115.108:3000/",
-    origin: "http://localhost:3000/",
+    origin: "http://18.116.115.108:3000/",
+    // origin: "http://localhost:3000/",
     credentials: true,
     methods: ["GET", "POST"],
   },
