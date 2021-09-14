@@ -27,6 +27,7 @@ import client from "../../config/artifacts/client";
 import { getUserInfo, getUserId } from "../../utils/components/getUserInfo";
 import { round } from "../../utils/components/getCurrentRoundId";
 import { getPreviousRolls } from "../../utils/components/getPreviousRolls";
+import Spinner from "../../components/spinner";
 
 let socket;
 
@@ -39,6 +40,7 @@ const Roulette = ({ status }) => {
   const [tab, setTab] = useState();
   const [amount, setAmount] = useState(0);
   const [choice, setChoice] = useState();
+  const [position, setPosition] = useState(-20);
 
   const [countdown, setCountdown] = useState(0);
   const [currentBlock, setCurrentBlock] = useState();
@@ -81,7 +83,10 @@ const Roulette = ({ status }) => {
   });
 
   useEffect(() => {
-    socket = io("http://18.116.115.108:5000", {
+    // socket = io("http://18.116.115.108:5000", {
+    //   transports: ["websocket"],
+    // });
+    socket = io("http://localhost:5000", {
       transports: ["websocket"],
     });
     if (typeof window.ethereum !== "undefined") {
@@ -260,11 +265,7 @@ const Roulette = ({ status }) => {
     socket.on("countdown", (result) => {
       if (result < 1) {
         setCountdown(0);
-        setProgressValue(0);
         setIsPlacedBet(false);
-        setBetOnOne([]);
-        setBetOnTwo([]);
-        setBetOnThree([]);
         setTab();
         setChoice();
       } else {
@@ -320,21 +321,19 @@ const Roulette = ({ status }) => {
   }, [betOnOne, betOnTwo, betOnThree]);
 
   useEffect(() => {
-    if (amount > user?.bscvBalance) {
-      setBalanceError(true);
-      setApproveModal(true);
-    } else {
-      setBalanceError(false);
-      setApproveModal(false);
-    }
-  }, [amount, setAmount]);
-
-  useEffect(() => {
     socket.on("winningChoice", (result) => {
       console.log(result);
-      setWinningChoice(result);
+      setWinningChoice(Number(result));
+      setProgressValue(0);
+      var res = Number(result);
+      var pos = res === 1 ? -1500 : res === 2 ? -1630 : -1730;
+      setPosition(pos);
       setTimeout(() => {
         setWinningChoice();
+        setPosition(-20);
+        setBetOnOne([]);
+        setBetOnTwo([]);
+        setBetOnThree([]);
       }, 3000);
     });
   }, []);
@@ -356,51 +355,57 @@ const Roulette = ({ status }) => {
           setTypes(false);
           if (amount > 0) {
             setAmountError(false);
-            const web3 = new Web3(window?.ethereum);
-            const Client = new web3.eth.Contract(client.abi, client.address);
 
-            const Amount = web3.utils.toWei(String(amount));
+            if (amount > user?.bscvBalance) {
+              setBalanceError(true);
+            } else {
+              setBalanceError(false);
+              const web3 = new Web3(window?.ethereum);
+              const Client = new web3.eth.Contract(client.abi, client.address);
 
-            try {
-              const BSCV = await getBSCV();
-              const BeforeBet = await BSCV.methods
-                ._beforeBet(window.ethereum.selectedAddress, Amount)
-                .call();
-              console.log("bet", BeforeBet);
-              if (BeforeBet === true) {
-                setApproveModal(false);
-                setProcessModal(true);
-                const tx = await Client.methods
-                  .bet(choice, Amount)
-                  .send({ from: window.ethereum.selectedAddress })
-                  .then((res) => {
-                    console.log(res);
-                    setProcessModal(false);
-                    setSuccessModal(true);
-                    setTimeout(() => {
-                      setSuccessModal(false);
-                    }, 3000);
-                    handleUpdateBscv();
-                  })
-                  .catch((err) => {
-                    console.log(err);
-                    setProcessModal(false);
-                    setErrorModal(true);
-                    setTimeout(() => {
-                      setErrorModal(false);
-                    }, 3000);
-                  });
-                console.log(tx);
-                console.log("BET placed");
-              } else {
-                setApproveModal(true);
+              const Amount = web3.utils.toWei(String(amount));
+
+              try {
+                const BSCV = await getBSCV();
+                const BeforeBet = await BSCV.methods
+                  ._beforeBet(window.ethereum.selectedAddress, Amount)
+                  .call();
+                console.log("bet", BeforeBet);
+                if (BeforeBet === true) {
+                  setApproveModal(false);
+                  setProcessModal(true);
+                  const tx = await Client.methods
+                    .bet(choice, Amount)
+                    .send({ from: window.ethereum.selectedAddress })
+                    .then((res) => {
+                      console.log(res);
+                      setProcessModal(false);
+                      setSuccessModal(true);
+                      setTimeout(() => {
+                        setSuccessModal(false);
+                      }, 3000);
+                      handleUpdateBscv();
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                      setProcessModal(false);
+                      setErrorModal(true);
+                      setTimeout(() => {
+                        setErrorModal(false);
+                      }, 3000);
+                    });
+                  console.log(tx);
+                  console.log("BET placed");
+                } else {
+                  setApproveModal(true);
+                }
+              } catch (err) {
+                console.log(err);
+                setErrorModal(true);
+                setTimeout(() => {
+                  setErrorModal(false);
+                }, 3000);
               }
-            } catch (err) {
-              console.log(err);
-              setErrorModal(true);
-              setTimeout(() => {
-                setErrorModal(false);
-              }, 3000);
             }
           } else {
             setAmountError(true);
@@ -446,107 +451,6 @@ const Roulette = ({ status }) => {
     </>
   );
 
-  const renderBettingImages = (
-    <>
-      <img
-        src="/animation1.svg"
-        width={"110px"}
-        height={"113px"}
-        alt=""
-        objectFit="contain"
-        layout="fixed"
-      />
-      <Image
-        src="/animation3.svg"
-        width={"110px"}
-        height={"113px"}
-        alt=""
-        objectFit="contain"
-        layout="fixed"
-      />
-      <Image
-        src="/animation2.svg"
-        width={"110px"}
-        height={"113px"}
-        alt=""
-        objectFit="contain"
-        layout="fixed"
-      />
-      <img
-        src="/animation1.svg"
-        width={"110px"}
-        height={"113px"}
-        alt=""
-        objectFit="contain"
-        layout="fixed"
-      />
-      <Image
-        src="/animation3.svg"
-        width={"110px"}
-        height={"113px"}
-        alt=""
-        objectFit="contain"
-        layout="fixed"
-      />
-      <Image
-        src="/animation2.svg"
-        width={"110px"}
-        height={"113px"}
-        alt=""
-        objectFit="contain"
-        layout="fixed"
-      />
-      <Image
-        src="/animation1.svg"
-        width={"110px"}
-        height={"113px"}
-        alt=""
-        objectFit="contain"
-        layout="fixed"
-      />
-      <Image
-        src="/animation3.svg"
-        width={"110px"}
-        height={"113px"}
-        alt=""
-        objectFit="contain"
-        layout="fixed"
-      />
-      <Image
-        src="/animation2.svg"
-        width={"110px"}
-        height={"113px"}
-        alt=""
-        objectFit="contain"
-        layout="fixed"
-      />
-      <img
-        src="/animation1.svg"
-        width={"110px"}
-        height={"113px"}
-        alt=""
-        objectFit="contain"
-        layout="fixed"
-      />
-      <Image
-        src="/animation3.svg"
-        width={"110px"}
-        height={"113px"}
-        alt=""
-        objectFit="contain"
-        layout="fixed"
-      />
-      <Image
-        src="/animation2.svg"
-        width={"110px"}
-        height={"113px"}
-        alt=""
-        objectFit="contain"
-        layout="fixed"
-      />
-    </>
-  );
-
   const renderRoulette = (
     <div className={styles.roulette}>
       <div className={styles.rouletteHeader} style={{ marginBottom: 20 }}>
@@ -583,14 +487,17 @@ const Roulette = ({ status }) => {
           className={
             winningChoice ? "photobanner roll-end" : "photobanner roll"
           }
+          style={{ backgroundPosition: `${position}px center` }}
         >
-          {winningChoice === "1"
-            ? renderWinningBetOne
-            : winningChoice === "2"
-            ? renderWinningBetTwo
-            : winningChoice === "3"
-            ? renderWinningBetThree
-            : renderBettingImages}
+          {/* {winningChoice === "1" ? (
+            renderWinningBetOne
+          ) : winningChoice === "2" ? (
+            renderWinningBetTwo
+          ) : winningChoice === "3" ? (
+            renderWinningBetThree
+          ) : (
+            <Spinner />
+          )} */}
         </div>
       </div>
       <div className={styles.rouletteTimer} style={{ margin: "1em 0" }}>
@@ -764,12 +671,36 @@ const Roulette = ({ status }) => {
   const renderRoundOne = _.uniqWith(betOnOne, _.isEqual)?.map((res, index) => {
     return (
       <div className={styles.roundBet} key={index}>
-        <Text variant="secondary" fontWeight="500" fontSize="12px">
+        <Text
+          variant="secondary"
+          fontWeight="500"
+          fontSize="12px"
+          style={{
+            color:
+              winningChoice === 1
+                ? "#10CA45"
+                : winningChoice !== undefined
+                ? "#F65151"
+                : null,
+          }}
+        >
           {`#${res.userId?.slice(0, 4)}...${res.userId?.slice(
             res.userId?.length - 4
           )}`}
         </Text>
-        <Text fontSize="12px">{res.amount}</Text>
+        <Text
+          fontSize="12px"
+          style={{
+            color:
+              winningChoice === 1
+                ? "#10CA45"
+                : winningChoice !== undefined
+                ? "#F65151"
+                : null,
+          }}
+        >
+          {res.amount}
+        </Text>
       </div>
     );
   });
@@ -777,12 +708,36 @@ const Roulette = ({ status }) => {
   const renderRoundTwo = _.uniqWith(betOnTwo, _.isEqual)?.map((res, index) => {
     return (
       <div className={styles.roundBet} key={index}>
-        <Text variant="secondary" fontWeight="500" fontSize="12px">
+        <Text
+          variant="secondary"
+          fontWeight="500"
+          fontSize="12px"
+          style={{
+            color:
+              winningChoice === 2
+                ? "#10CA45"
+                : winningChoice !== undefined
+                ? "#F65151"
+                : null,
+          }}
+        >
           {`#${res.userId?.slice(0, 4)}...${res.userId?.slice(
             res.userId?.length - 4
           )}`}
         </Text>
-        <Text fontSize="12px">{res.amount}</Text>
+        <Text
+          fontSize="12px"
+          style={{
+            color:
+              winningChoice === 2
+                ? "#10CA45"
+                : winningChoice !== undefined
+                ? "#F65151"
+                : null,
+          }}
+        >
+          {res.amount}
+        </Text>
       </div>
     );
   });
@@ -791,12 +746,36 @@ const Roulette = ({ status }) => {
     (res, index) => {
       return (
         <div className={styles.roundBet} key={index}>
-          <Text variant="secondary" fontWeight="500" fontSize="12px">
+          <Text
+            variant="secondary"
+            fontWeight="500"
+            fontSize="12px"
+            style={{
+              color:
+                winningChoice === 3
+                  ? "#10CA45"
+                  : winningChoice !== undefined
+                  ? "#F65151"
+                  : null,
+            }}
+          >
             {`#${res.userId?.slice(0, 4)}...${res.userId?.slice(
               res.userId?.length - 4
             )}`}
           </Text>
-          <Text fontSize="12px">{res.amount}</Text>
+          <Text
+            fontSize="12px"
+            style={{
+              color:
+                winningChoice === 3
+                  ? "#10CA45"
+                  : winningChoice !== undefined
+                  ? "#F65151"
+                  : null,
+            }}
+          >
+            {res.amount}
+          </Text>
         </div>
       );
     }
@@ -849,7 +828,14 @@ const Roulette = ({ status }) => {
   const renderTeams = (
     <div className={styles.teams}>
       <div className={styles.rounds}>
-        <div className={styles.roundBet} style={{ marginBottom: 20 }}>
+        <div
+          className={styles.roundBet}
+          style={{
+            marginBottom: 20,
+            opacity: isBet && winningChoice !== 1 ? "0.5" : "1",
+            cursor: isBet && winningChoice !== 1 ? "no-drop" : "auto",
+          }}
+        >
           <Image
             src="/animation1.svg"
             alt="icon"
@@ -864,20 +850,53 @@ const Roulette = ({ status }) => {
               setTab(1);
               setChoice(1);
             }}
+            style={{
+              pointerEvents: isBet && winningChoice !== 1 ? "none" : "auto",
+            }}
           >
             <Text variant="primary">{tab === 1 ? "selected" : "select"}</Text>
           </aside>
         </div>
-        <div className={styles.roundBet} style={{ marginBottom: 10 }}>
+        <div
+          className={styles.roundBet}
+          style={{
+            marginBottom: 10,
+            opacity: isBet && winningChoice !== 1 ? "0.5" : "1",
+          }}
+        >
           <div>
             <Image alt="user" src="/user.svg" width={20} height={20} />
-            <Text component="span" variant="primary" fontSize="12px">
+            <Text
+              component="span"
+              variant="primary"
+              fontSize="12px"
+              style={{
+                color:
+                  winningChoice === 1
+                    ? "#10CA45"
+                    : winningChoice !== undefined
+                    ? "#F65151"
+                    : null,
+              }}
+            >
               {_.uniqWith(betOnOne, _.isEqual)?.length} bets
             </Text>
           </div>
           <div>
             <Image alt="dollar" src="/dollar.svg" width={20} height={20} />
-            <Text component="span" variant="primary" fontSize="12px">
+            <Text
+              component="span"
+              variant="primary"
+              fontSize="12px"
+              style={{
+                color:
+                  winningChoice === 1
+                    ? "#10CA45"
+                    : winningChoice !== undefined
+                    ? "#F65151"
+                    : null,
+              }}
+            >
               {betOneValue ? (
                 <CountUp
                   start="0"
@@ -893,7 +912,13 @@ const Roulette = ({ status }) => {
           </div>
         </div>
         {betOnOne.length > 0 && (
-          <div className={styles.userList}>
+          <div
+            className={styles.userList}
+            style={{
+              opacity: isBet && winningChoice !== 1 ? "0.5" : "1",
+              color: "green",
+            }}
+          >
             <Text fontSize="12px" fontWeight="500" style={{ color: "#E6813C" }}>
               Heighest Bid
             </Text>
@@ -916,7 +941,14 @@ const Roulette = ({ status }) => {
         )}
       </div>
       <div className={styles.rounds}>
-        <div className={styles.roundBet} style={{ marginBottom: 20 }}>
+        <div
+          className={styles.roundBet}
+          style={{
+            marginBottom: 20,
+            opacity: isBet && winningChoice !== 2 ? "0.5" : "1",
+            cursor: isBet && winningChoice !== 2 ? "no-drop" : "auto",
+          }}
+        >
           <Image
             src="/animation2.svg"
             alt="icon"
@@ -931,20 +963,53 @@ const Roulette = ({ status }) => {
               setTab(2);
               setChoice(2);
             }}
+            style={{
+              pointerEvents: isBet && winningChoice !== 2 ? "none" : "auto",
+            }}
           >
             <Text variant="primary">{tab === 2 ? "selected" : "select"}</Text>
           </aside>
         </div>
-        <div className={styles.roundBet} style={{ marginBottom: 10 }}>
+        <div
+          className={styles.roundBet}
+          style={{
+            marginBottom: 10,
+            opacity: isBet && winningChoice !== 2 ? "0.5" : "1",
+          }}
+        >
           <div>
             <Image alt="" src="/user.svg" width={20} height={20} />
-            <Text component="span" variant="primary" fontSize="12px">
+            <Text
+              component="span"
+              variant="primary"
+              fontSize="12px"
+              style={{
+                color:
+                  winningChoice === 2
+                    ? "#10CA45"
+                    : winningChoice !== undefined
+                    ? "#F65151"
+                    : null,
+              }}
+            >
               {_.uniqWith(betOnTwo, _.isEqual)?.length} bets
             </Text>
           </div>
           <div>
             <Image alt="" src="/dollar.svg" width={20} height={20} />
-            <Text component="span" variant="primary" fontSize="12px">
+            <Text
+              component="span"
+              variant="primary"
+              fontSize="12px"
+              style={{
+                color:
+                  winningChoice === 2
+                    ? "#10CA45"
+                    : winningChoice !== undefined
+                    ? "#F65151"
+                    : null,
+              }}
+            >
               {betTwoValue ? (
                 <CountUp
                   start="0"
@@ -961,7 +1026,10 @@ const Roulette = ({ status }) => {
         </div>
 
         {betOnTwo.length > 0 && (
-          <div className={styles.userList}>
+          <div
+            className={styles.userList}
+            style={{ opacity: isBet && winningChoice !== 2 ? "0.5" : "1" }}
+          >
             <Text fontSize="12px" fontWeight="500" style={{ color: "#E6813C" }}>
               Heighest Bid
             </Text>
@@ -984,7 +1052,14 @@ const Roulette = ({ status }) => {
         )}
       </div>
       <div className={styles.rounds}>
-        <div className={styles.roundBet} style={{ marginBottom: 20 }}>
+        <div
+          className={styles.roundBet}
+          style={{
+            marginBottom: 20,
+            opacity: isBet && winningChoice !== 3 ? "0.5" : "1",
+            cursor: isBet && winningChoice !== 3 ? "no-drop" : "auto",
+          }}
+        >
           <Image
             src="/animation3.svg"
             alt="icon"
@@ -999,20 +1074,53 @@ const Roulette = ({ status }) => {
               setTab(3);
               setChoice(3);
             }}
+            style={{
+              pointerEvents: isBet && winningChoice !== 3 ? "none" : "auto",
+            }}
           >
             <Text variant="primary">{tab === 3 ? "selected" : "select"}</Text>
           </aside>
         </div>
-        <div className={styles.roundBet} style={{ marginBottom: 10 }}>
+        <div
+          className={styles.roundBet}
+          style={{
+            marginBottom: 10,
+            opacity: isBet && winningChoice !== 3 ? "0.5" : "1",
+          }}
+        >
           <div>
             <Image alt="" src="/user.svg" width={20} height={20} />
-            <Text component="span" variant="primary" fontSize="12px">
+            <Text
+              component="span"
+              variant="primary"
+              fontSize="12px"
+              style={{
+                color:
+                  winningChoice === 3
+                    ? "#10CA45"
+                    : winningChoice !== undefined
+                    ? "#F65151"
+                    : null,
+              }}
+            >
               {_.uniqWith(betOnThree, _.isEqual)?.length} bets
             </Text>
           </div>
           <div>
             <Image alt="" src="/dollar.svg" width={20} height={20} />
-            <Text component="span" variant="primary" fontSize="12px">
+            <Text
+              component="span"
+              variant="primary"
+              fontSize="12px"
+              style={{
+                color:
+                  winningChoice === 3
+                    ? "#10CA45"
+                    : winningChoice !== undefined
+                    ? "#F65151"
+                    : null,
+              }}
+            >
               {betThreeValue ? (
                 <CountUp
                   start="0"
@@ -1028,7 +1136,10 @@ const Roulette = ({ status }) => {
           </div>
         </div>
         {betOnThree.length > 0 && (
-          <div className={styles.userList}>
+          <div
+            className={styles.userList}
+            style={{ opacity: isBet && winningChoice !== 3 ? "0.5" : "1" }}
+          >
             <Text fontSize="12px" fontWeight="500" style={{ color: "#E6813C" }}>
               Heighest Bid
             </Text>
@@ -1102,11 +1213,11 @@ const Roulette = ({ status }) => {
         <Modal variant="invalidBet" setIsModal={setIsPlacedBet} />
       )}
 
-      <Modal
+      {/* <Modal
         variant="winningChoice"
         isModal={winningChoice}
         winningChoice={winningChoice}
-      />
+      /> */}
     </>
   );
 };

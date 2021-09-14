@@ -225,7 +225,7 @@ a {
 }
 
 .photobanner {
-  width: 300% !important;
+  width: 100% !important;
   height: 100%;
   overflow: auto;
   display: flex;
@@ -235,6 +235,23 @@ a {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  background: url(../public/anim.png);
+  background-position: 130px center;
+  background-repeat: repeat-x;
+  background-size: auto 100px;
+  transition: 2s all cubic-bezier(0.785, 0.135, 0.15, 0.86);
+  /* animation: photobanner 4s cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite; */
+}
+
+@keyframes bannermove {
+  0% {
+    /* transform: translate(100%, 0); */
+    background-position: 0 center;
+  }
+  100% {
+    /* transform: translate(-125%, 0); */
+    background-position: 500px center;
+  }
 }
 
 .photobanner > div {
@@ -242,23 +259,23 @@ a {
   height: 100%;
 }
 
-.roll {
-  animation: bannermove 4s linear infinite;
+/* .roll {
+  animation: bannermove 4s cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
 }
 
 .roll-end {
   animation: rollend 2s ease-in-out 1;
   animation-delay: 1s;
-}
+} */
 
 @keyframes bannermove {
   0% {
     /* transform: translate(100%, 0); */
-    left: 120%;
+    left: 100%;
   }
   100% {
     /* transform: translate(-125%, 0); */
-    left: 40%;
+    left: -70%;
   }
 }
 
