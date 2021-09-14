@@ -11,7 +11,14 @@ import controller from "./artifacts/controller.js";
 //import { getUserAddress } from "./utils/getAddress.js";
 import { wssUrl } from "./artifacts/RPCURL.js";
 
+let currentChoice;
+
 export const operator = (socket) => {
+  socket.on("choice", (res) => {
+    console.log(res);
+    currentChoice = res;
+  });
+
   const web3Ws = new Web3(new Web3.providers.WebsocketProvider(wssUrl));
 
   const eth = new ethers.providers.WebSocketProvider(wssUrl);
