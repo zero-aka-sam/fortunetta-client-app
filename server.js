@@ -17,7 +17,8 @@ let count = 0;
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "http://18.116.115.108:3000/",
+    // origin: "http://18.116.115.108:3000/",
+    origin: "http://localhost:3000/",
     credentials: true,
     methods: ["GET", "POST"],
   },
@@ -48,7 +49,8 @@ app.get("/", (req, res) => {
   res.send("Homepage");
 });
 
-server.listen(PORT, () => {
+server.listen(PORT, (err) => {
+  if (err) console.log(err);
   console.log(`Server Running at ${PORT}`);
 });
 
@@ -92,4 +94,6 @@ io.on("connection", (socket) => {
       console.error(error);
     }
   });
+
+  io.on("error", (err) => console.log("error on websocket"));
 });
