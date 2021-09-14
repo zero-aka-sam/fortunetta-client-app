@@ -27,7 +27,6 @@ import client from "../../config/artifacts/client";
 import { getUserInfo, getUserId } from "../../utils/components/getUserInfo";
 import { round } from "../../utils/components/getCurrentRoundId";
 import { getPreviousRolls } from "../../utils/components/getPreviousRolls";
-import Spinner from "../../components/spinner";
 
 let socket;
 
@@ -83,12 +82,12 @@ const Roulette = ({ status }) => {
   });
 
   useEffect(() => {
-    socket = io("http://18.116.115.108:5000", {
-      transports: ["websocket"],
-    });
-    // socket = io("http://localhost:5000", {
+    // socket = io("http://18.116.115.108:5000", {
     //   transports: ["websocket"],
     // });
+    socket = io("http://localhost:5000", {
+      transports: ["websocket"],
+    });
     if (typeof window.ethereum !== "undefined") {
       setInstallMetamask(false);
       let chainID = window.ethereum.chainId;
@@ -326,7 +325,7 @@ const Roulette = ({ status }) => {
       setWinningChoice(Number(result));
       setProgressValue(0);
       var res = Number(result);
-      var pos = res === 1 ? -1500 : res === 2 ? -1630 : -1730;
+      var pos = res === 1 ? -2500 : res === 2 ? -2630 : -2730;
       setPosition(pos);
       setTimeout(() => {
         setWinningChoice();
@@ -334,7 +333,7 @@ const Roulette = ({ status }) => {
         setBetOnOne([]);
         setBetOnTwo([]);
         setBetOnThree([]);
-      }, 3000);
+      }, 4000);
     });
   }, []);
 
@@ -383,7 +382,7 @@ const Roulette = ({ status }) => {
                       setSuccessModal(true);
                       setTimeout(() => {
                         setSuccessModal(false);
-                      }, 3000);
+                      }, 2000);
                       handleUpdateBscv();
                     })
                     .catch((err) => {
@@ -392,7 +391,7 @@ const Roulette = ({ status }) => {
                       setErrorModal(true);
                       setTimeout(() => {
                         setErrorModal(false);
-                      }, 3000);
+                      }, 2000);
                     });
                   console.log(tx);
                   console.log("BET placed");
@@ -426,30 +425,6 @@ const Roulette = ({ status }) => {
       setIsNotConnected(true);
     }
   }
-
-  const renderWinningBetOne = (
-    <>
-      <Image src="/animation2.svg" width={"110px"} height={"113px"} alt="" />
-      <Image src="/animation1.svg" width={"110px"} height={"113px"} alt="" />
-      <Image src="/animation3.svg" width={"110px"} height={"113px"} alt="" />
-    </>
-  );
-
-  const renderWinningBetTwo = (
-    <>
-      <Image src="/animation1.svg" width={"110px"} height={"113px"} alt="" />
-      <Image src="/animation2.svg" width={"110px"} height={"113px"} alt="" />
-      <Image src="/animation3.svg" width={"110px"} height={"113px"} alt="" />
-    </>
-  );
-
-  const renderWinningBetThree = (
-    <>
-      <Image src="/animation1.svg" width={"110px"} height={"113px"} alt="" />
-      <Image src="/animation3.svg" width={"110px"} height={"113px"} alt="" />
-      <Image src="/animation2.svg" width={"110px"} height={"113px"} alt="" />
-    </>
-  );
 
   const renderRoulette = (
     <div className={styles.roulette}>
@@ -487,18 +462,11 @@ const Roulette = ({ status }) => {
           className={
             winningChoice ? "photobanner roll-end" : "photobanner roll"
           }
-          style={{ backgroundPosition: `${position}px center` }}
-        >
-          {/* {winningChoice === "1" ? (
-            renderWinningBetOne
-          ) : winningChoice === "2" ? (
-            renderWinningBetTwo
-          ) : winningChoice === "3" ? (
-            renderWinningBetThree
-          ) : (
-            <Spinner />
-          )} */}
-        </div>
+          style={{
+            backgroundPosition: `${position}px center`,
+            opacity: winningChoice ? "1" : "0.5",
+          }}
+        ></div>
       </div>
       <div className={styles.rouletteTimer} style={{ margin: "1em 0" }}>
         <Text variant="secondary">
@@ -565,47 +533,6 @@ const Roulette = ({ status }) => {
       <Text component="div" variant="secondary" fontWeight="500">
         Bet amount
       </Text>
-      {/* <div
-        className={styles.betFormReturnControls}
-        style={{ pointerEvents: isBet ? "none" : null }}
-      >
-        <Text
-          variant="primary"
-          fontSize="14px"
-          onClick={() => {
-            setTab(1);
-            setChoice(1);
-          }}
-          style={{ border: tab === 1 && "1px solid #FDBB35" }}
-        >
-          2X
-        </Text>
-        <Text
-          variant="primary"
-          fontSize="14px"
-          onClick={() => {
-            setTab(2);
-            setChoice(2);
-          }}
-          style={{ border: tab === 2 && "1px solid #FDBB35" }}
-        >
-          14X
-        </Text>
-        <Text
-          variant="primary"
-          fontSize="14px"
-          onClick={() => {
-            setTab(3);
-            setChoice(3);
-          }}
-          style={{ border: tab === 3 && "1px solid #FDBB35" }}
-        >
-          2X
-        </Text>
-        {types && (
-          <div className={styles.typeToaster}>select one of these type</div>
-        )}
-      </div> */}
       <div className={styles.input}>
         <Image alt="" src="/coins.svg" width={20} height={20} />
         <input
