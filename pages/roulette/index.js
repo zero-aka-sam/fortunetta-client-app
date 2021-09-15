@@ -39,6 +39,7 @@ const Roulette = ({ status }) => {
   const [tab, setTab] = useState();
   const [amount, setAmount] = useState(0);
   const [choice, setChoice] = useState();
+  const [innerWidth, setInnerWidth] = useState(0);
   const [position, setPosition] = useState(-20);
 
   const [countdown, setCountdown] = useState(0);
@@ -63,7 +64,7 @@ const Roulette = ({ status }) => {
   const [rollingEnd, setRollingEnd] = useState(false);
   const [installMetamask, setInstallMetamask] = useState(false);
   const [isPlacedBet, setIsPlacedBet] = useState(false);
-  const [winningChoice, setWinningChoice] = useState();
+  const [winningChoice, setWinningChoice] = useState(1);
   const [wrongNetwork, setWrongNetwork] = useState(false);
   const [chainId, setChaniId] = useState("");
   const [previousRolls, setPreviousRolls] = useState();
@@ -80,6 +81,18 @@ const Roulette = ({ status }) => {
       );
     }
   });
+
+  const getWidth = () => {
+    setInnerWidth(window.innerWidth);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", getWidth);
+
+    return () => {
+      window.removeEventListener("resize", getWidth);
+    };
+  }, []);
 
   useEffect(() => {
     socket = io("http://18.116.115.108:5000", {
@@ -102,6 +115,7 @@ const Roulette = ({ status }) => {
     } else {
       setInstallMetamask(true);
     }
+    setInnerWidth(window.innerWidth);
   }, []);
 
   useEffect(() => {
@@ -319,13 +333,26 @@ const Roulette = ({ status }) => {
     });
   }, [betOnOne, betOnTwo, betOnThree]);
 
+  const getPosition = (val) => {
+    if (innerWidth <= 576) {
+      return val - 130;
+    }
+
+    return val;
+  };
+
   useEffect(() => {
     socket.on("winningChoice", (result) => {
       console.log(result);
       setWinningChoice(Number(result));
       setProgressValue(0);
       var res = Number(result);
-      var pos = res === 1 ? -2500 : res === 2 ? -2630 : -2730;
+      var pos =
+        res === 1
+          ? getPosition(-2500)
+          : res === 2
+          ? getPosition(-2630)
+          : getPosition(-2730);
       setPosition(pos);
       setTimeout(() => {
         setWinningChoice();

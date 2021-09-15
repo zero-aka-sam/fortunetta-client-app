@@ -120,7 +120,7 @@
   cursor: pointer;
 }
 
-@media only screen and (max-width: 576px) {
+@media only screen and (max-width: 992px) {
   .chat {
     display: none;
   }
